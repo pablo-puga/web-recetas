@@ -1,3 +1,52 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "indent": [
+      "error",
+      4,
+      {
+        "SwitchCase": 1,
+        "ignoredNodes": [
+          "VariableDeclaration[declarations.length=0]"
+        ]
+      }
+    ],
+    "no-trailing-spaces": [
+      "error",
+      {
+        "ignoreComments": true,
+        "skipBlankLines": true
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "groups": [
+          "builtin",
+          "external",
+          "parent",
+          "object",
+          "sibling",
+          "index",
+          "type"
+        ],
+        "newlines-between": "always"
+      }
+    ],
+    "import/no-anonymous-default-export": "off",
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
+  }
 }
