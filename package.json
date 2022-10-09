@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "data:get:categories": "ts-node --pretty scripts/get-categories.ts"
+    "data:get:categories": "ts-node --pretty scripts/get-categories.ts",
+    "data:get:pages": "ts-node --pretty scripts/get-pages.ts"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.1",
