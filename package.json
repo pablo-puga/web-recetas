@@ -9,7 +9,7 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "data:get:categories": "ts-node --pretty scripts/get-categories.ts",
-    "data:get:pages": "ts-node --pretty scripts/get-pages.ts"
+    "data:get:recipes": "ts-node --pretty scripts/get-recipes.ts"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.1",

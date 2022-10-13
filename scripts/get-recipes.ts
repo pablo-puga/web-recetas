@@ -1,13 +1,13 @@
-import { getAllPages } from '../src/data/get-pages';
+import { getAllRecipes } from '../src/data/get-recipes-list';
 
 const run = async () => {
-    const pages = await getAllPages();
+    const pages = await getAllRecipes();
 
     if (pages.ok) {
         console.log('The list of recipes is:');
-        pages.value.forEach((page) => {
+        pages.value.forEach((recipe) => {
             console.log(
-                `  - ${page.title} (${page.slug}): ${page.categories
+                `  - ${recipe.title} (${recipe.slug}): ${recipe.categories
                     .map((category) => category.name)
                     .join(',')}`,
             );

@@ -4,7 +4,7 @@ export interface Category {
     color: string;
 }
 
-export interface RecipePage {
+export interface Recipe {
     id: string;
     createdAt: string;
     lastEditedAt: string;

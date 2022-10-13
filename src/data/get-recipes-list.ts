@@ -6,7 +6,7 @@ import {
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { notionClient, RECIPES_DATABASE_ID } from '../clients/notion';
 import { NotionError } from '../errors/notion-error';
-import { Category, RecipePage } from '../types';
+import { Category, Recipe } from '../types';
 import { None, Option, Some } from '../utils/option';
 import { Err, Ok, Result } from '../utils/result';
 
@@ -49,7 +49,7 @@ const getPageSlug = (page: PageObjectResponse): Option<string> => {
     return None;
 };
 
-const getAllPages = async (): Promise<Result<RecipePage[], NotionError>> => {
+const getAllRecipes = async (): Promise<Result<Recipe[], NotionError>> => {
     try {
         const pages = await notionClient.databases.query({
             database_id: RECIPES_DATABASE_ID,
@@ -67,7 +67,7 @@ const getAllPages = async (): Promise<Result<RecipePage[], NotionError>> => {
             ],
         });
 
-        const recipePages: RecipePage[] = [];
+        const recipePages: Recipe[] = [];
         pages.results.forEach((page) => {
             if (isFullPage(page)) {
                 const title = getPageTitle(page);
@@ -96,4 +96,4 @@ const getAllPages = async (): Promise<Result<RecipePage[], NotionError>> => {
     }
 };
 
-export { getAllPages };
+export { getAllRecipes };
