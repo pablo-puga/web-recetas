@@ -7,6 +7,7 @@ import {
     getPageCategories,
     getPageSlug,
     getPageTitle,
+    SLUG_PROPERTY_NAME,
 } from './notion/properties';
 
 const PUBLISHED_PROPERTY_NAME = 'Publicada';
@@ -16,10 +17,20 @@ const getAllRecipes = async (): Promise<Result<Recipe[], NotionError>> => {
         const pages = await notionClient.databases.query({
             database_id: RECIPES_DATABASE_ID,
             filter: {
-                property: PUBLISHED_PROPERTY_NAME,
-                checkbox: {
-                    equals: true,
-                },
+                and: [
+                    {
+                        property: PUBLISHED_PROPERTY_NAME,
+                        checkbox: {
+                            equals: true,
+                        },
+                    },
+                    {
+                        property: SLUG_PROPERTY_NAME,
+                        rich_text: {
+                            is_not_empty: true,
+                        },
+                    },
+                ],
             },
             sorts: [
                 {
