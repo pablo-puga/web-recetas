@@ -3,7 +3,9 @@ export type PageBlock =
     | HeadingBlock<2>
     | HeadingBlock<3>
     | HeadingBlock<4>
-    | ParagraphBlock;
+    | OrderedList
+    | ParagraphBlock
+    | UnorderedList;
 
 export type TextContent = PlainText | SpanBlock;
 
@@ -25,6 +27,11 @@ export interface HeadingBlock<L extends 2 | 3 | 4> {
     content: string;
 }
 
+export interface OrderedList {
+    type: 'ordered_list';
+    content: TextContent[][];
+}
+
 export interface ParagraphBlock {
     type: 'paragraph';
     content: TextContent[];
@@ -39,6 +46,11 @@ export interface SpanBlock {
     type: 'span';
     content: string;
     style: Style;
+}
+
+export interface UnorderedList {
+    type: 'unordered_list';
+    content: TextContent[][];
 }
 
 export const BR = (): BreakBlock => ({ type: 'break' });
@@ -61,6 +73,11 @@ export const H4 = (content: string): HeadingBlock<4> => ({
     content,
 });
 
+export const OL = (content: TextContent[][]): OrderedList => ({
+    type: 'ordered_list',
+    content,
+});
+
 export const P = (content: TextContent[]): ParagraphBlock => ({
     type: 'paragraph',
     content,
@@ -75,4 +92,9 @@ export const SpanBlock = (content: string, style: Style): SpanBlock => ({
     type: 'span',
     content,
     style,
+});
+
+export const UL = (content: TextContent[][]): UnorderedList => ({
+    type: 'unordered_list',
+    content,
 });

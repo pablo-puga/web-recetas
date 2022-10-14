@@ -1,3 +1,5 @@
+import { PageBlock } from './utils/page-blocks';
+
 export interface Category {
     name: string;
     id: string;
@@ -11,4 +13,8 @@ export interface Recipe {
     title: string;
     slug: string;
     categories: Category[];
+}
+
+export interface RecipeWithBody extends Recipe {
+    body: PageBlock[];
 }
