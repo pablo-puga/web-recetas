@@ -1,9 +1,4 @@
-import {
-    isFullBlock,
-    isFullPage,
-    isNotionClientError,
-    NotionClientError,
-} from '@notionhq/client';
+import { isFullBlock, isFullPage } from '@notionhq/client';
 import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints';
 import { notionClient, RECIPES_DATABASE_ID } from '../clients/notion';
 import { NotionError } from '../errors/notion-error';
@@ -130,12 +125,8 @@ const getRecipe = async (
 
         return Ok(baseRecipe);
     } catch (e) {
-        if (isNotionClientError(e)) return Err(new NotionError(e));
-        return Err(
-            new NotionError({
-                message: e instanceof Error ? e.message : e,
-            } as NotionClientError),
-        );
+        if (e instanceof Error) return Err(new NotionError(e));
+        return Err(new NotionError(new Error(JSON.stringify(e))));
     }
 };
 

@@ -11,9 +11,7 @@ const run = async (slug: string) => {
             console.error(`Recipe with slug '${slug}' does not exist`);
         }
     } else {
-        console.error('There was an error:');
-        console.error(`  - Message: ${recipeSearch.value.message}`);
-        console.error(`  - Code: ${recipeSearch.value.code}`);
+        console.error(recipeSearch.value.source);
     }
 };
 

@@ -31,7 +31,10 @@ const getPageCategories = (page: PageObjectResponse): Category[] => {
 
 const getPageSlug = (page: PageObjectResponse): Option<string> => {
     const slugProperty = page.properties[SLUG_PROPERTY_NAME];
-    if (slugProperty.type === 'rich_text') {
+    if (
+        slugProperty.type === 'rich_text' &&
+        slugProperty.rich_text.length > 0
+    ) {
         if (slugProperty.rich_text[0].type === 'text') {
             return Some(slugProperty.rich_text[0].plain_text);
         }

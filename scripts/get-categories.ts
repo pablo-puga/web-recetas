@@ -7,9 +7,7 @@ const run = async () => {
         console.log('The list of categories is:');
         categories.value.map((category) => console.log(`  - ${category.name}`));
     } else {
-        console.error('There was an error:');
-        console.error(`  - Message: ${categories.value.message}`);
-        console.error(`  - Code: ${categories.value.code}`);
+        console.error(categories.value.source);
     }
 };
 

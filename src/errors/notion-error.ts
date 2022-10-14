@@ -1,19 +1,23 @@
-import type { NotionClientError } from '@notionhq/client';
+import { isNotionClientError, NotionClientError } from '@notionhq/client';
 
 interface NotionError extends Error {
     readonly type: 'NotionError';
     code: string;
-    source: NotionClientError;
+    source: NotionClientError | Error;
 }
 
 class NotionError extends Error implements NotionError {
     readonly type = 'NotionError';
     code: string;
-    source: NotionClientError;
+    source: NotionClientError | Error;
 
-    constructor(error: NotionClientError) {
+    constructor(error: NotionClientError | Error) {
         super(error.message);
-        this.code = error?.code || 'Unknown';
+        if (isNotionClientError(error)) {
+            this.code = error.code;
+        } else {
+            this.code = 'Unknown';
+        }
         this.source = error;
     }
 }

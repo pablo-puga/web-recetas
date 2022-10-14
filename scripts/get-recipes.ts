@@ -13,9 +13,7 @@ const run = async () => {
             );
         });
     } else {
-        console.error('There was an error:');
-        console.error(`  - Message: ${pages.value.message}`);
-        console.error(`  - Code: ${pages.value.code}`);
+        console.error(pages.value.source);
     }
 };
 

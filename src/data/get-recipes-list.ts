@@ -1,8 +1,4 @@
-import {
-    isFullPage,
-    isNotionClientError,
-    NotionClientError,
-} from '@notionhq/client';
+import { isFullPage } from '@notionhq/client';
 import { notionClient, RECIPES_DATABASE_ID } from '../clients/notion';
 import { NotionError } from '../errors/notion-error';
 import { Recipe } from '../types';
@@ -53,12 +49,8 @@ const getAllRecipes = async (): Promise<Result<Recipe[], NotionError>> => {
 
         return Ok(recipePages);
     } catch (e) {
-        if (isNotionClientError(e)) return Err(new NotionError(e));
-        return Err(
-            new NotionError({
-                message: e instanceof Error ? e.message : e,
-            } as NotionClientError),
-        );
+        if (e instanceof Error) return Err(new NotionError(e));
+        return Err(new NotionError(new Error(JSON.stringify(e))));
     }
 };
 
