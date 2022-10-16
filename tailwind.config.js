@@ -25,6 +25,10 @@ module.exports = {
                 'theme-green': withOpacityValue('180 248 200'),
                 'theme-blue': withOpacityValue('160 231 229'),
                 'theme-pink': withOpacityValue('255 174 188'),
+                'theme-red': withOpacityValue('255 155 155'),
+                'theme-purple': withOpacityValue('202 184 255'),
+                'theme-orange': withOpacityValue('255 219 164'),
+                'theme-brown': withOpacityValue('193 163 163'),
             },
             fontFamily: {
                 roboto: ['Roboto', 'Arial', 'Noto Sans', 'sans-serif'],
@@ -36,4 +40,14 @@ module.exports = {
         purgeLayersByDefault: true,
         removeDeprecatedGapUtilities: true,
     },
+    safelist: [
+        {
+            pattern:
+                /bg-theme-(grey-dark|grey-light|yellow|green|blue|pink|red|purple|orange|brown)/,
+        },
+        {
+            pattern:
+                /text-theme-(grey-dark|grey-light|yellow|green|blue|pink|red|purple|orange|brown)/,
+        },
+    ],
 };

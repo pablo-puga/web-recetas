@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import style from './Header.module.css';
 
-const Header = () => (
+const Header = ({ isTitle = true }) => (
     <header className={style.header}>
         <div className={style['header-img-container']}>
             <Image
@@ -18,7 +18,14 @@ const Header = () => (
             />
         </div>
         <div className="w-full px-2 sm:px-3 md:px-4 lg:px-0 flex flex-row justify-center">
-            <h1 className={style['header-title']}>Las Recetas de Pablo</h1>
+            {isTitle && (
+                <h1 className={style['header-title']}>Las Recetas de Pablo</h1>
+            )}
+            {!isTitle && (
+                <span className={style['header-title']}>
+                    Las Recetas de Pablo
+                </span>
+            )}
         </div>
     </header>
 );

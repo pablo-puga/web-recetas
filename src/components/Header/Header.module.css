@@ -49,6 +49,11 @@
 }
 
 @media screen(lg) {
+    .header-img-container {
+        img {
+            transform: translateY(-30%);
+        }
+    }
     .header-title {
         @apply text-3xl py-4;
         transform: translateY(-225px);
