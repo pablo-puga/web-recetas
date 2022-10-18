@@ -9,7 +9,7 @@ interface Props {
 
 const CategoryBadge = ({ category }: Props) => {
     const themeColor = stringColorToTheme(category.color);
-    const bgThemeColor = `bg-${themeColor}`;
+    const bgThemeColor = `bg-${themeColor}/70`;
     return (
         <Link href={`/categoria/${category.name.toLowerCase()}`}>
             <a
