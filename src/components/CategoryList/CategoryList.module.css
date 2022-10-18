@@ -1,0 +1,4 @@
+.category-list-wrapper {
+    @apply mt-10 px-3 w-full max-w-lg mb-8 lg:mb-0 lg:w-44 lg:max-w-xs lg:ml-16;
+    min-width: 100px;
+}

@@ -1,12 +1,13 @@
 import Head from 'next/head';
 
 import type { GetStaticProps, NextPage } from 'next';
-import { getRecipes } from '../data/get-recipes-list';
-import { Category, Recipe } from '../types';
-import { getCategories } from '../data/get-categories';
+import { CategoryList } from '../components/CategoryList';
+import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
 import { RecipeList } from '../components/RecipeList';
-import { Footer } from '../components/Footer';
+import { getCategories } from '../data/get-categories';
+import { getRecipes } from '../data/get-recipes-list';
+import { Category, Recipe } from '../types';
 
 interface Props {
     categoryList: Category[];
@@ -23,6 +24,11 @@ export const getStaticProps: GetStaticProps = async () => {
     if (categoryListSearch.error) {
         throw categoryListSearch.value.source;
     }
+
+    categoryListSearch.value.sort((a, b) => {
+        if (a.name === b.name) return 0;
+        return a.name < b.name ? -1 : 1;
+    });
 
     return {
         revalidate: 3600 * 6,
@@ -43,8 +49,9 @@ const Home: NextPage<Props> = ({ categoryList, recipeList }) => {
 
             <Header />
 
-            <main className="w-full px-2 sm:px-3 md:px-4 lg:px-0 flex flex-row justify-center">
+            <main className="w-full px-2 sm:px-3 md:px-4 lg:px-0 flex flex-col items-center lg:flex-row lg:justify-center lg:items-start">
                 <RecipeList recipeList={recipeList} />
+                <CategoryList categoryList={categoryList} />
             </main>
 
             <Footer />
