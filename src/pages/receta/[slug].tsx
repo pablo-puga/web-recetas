@@ -1,6 +1,10 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
+import { PageLayout } from '../../components/PageLayout';
+import { RecipeDisplay } from '../../components/RecipeDisplay';
+import { RecipeMetadata } from '../../components/RecipeMetadata/RecipeMetadata';
 import { getRecipe } from '../../data/get-recipe';
 import { getRecipes } from '../../data/get-recipes-list';
 import { RecipeWithBody } from '../../types';
@@ -98,10 +102,14 @@ const RecipePage: NextPage<Props> = (props) => {
 
     const recipe = props.recipe;
     return (
-        <>
-            <h1>{recipe.title}</h1>
-            <pre>{JSON.stringify(recipe, null, 2)}</pre>
-        </>
+        <PageLayout
+            title={recipe.title}
+            className="lg:!flex-col lg:!justify-start lg:!items-center"
+            headerSize="wide"
+        >
+            <RecipeMetadata recipe={recipe} />
+            <RecipeDisplay recipe={recipe} />
+        </PageLayout>
     );
 };
 

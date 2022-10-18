@@ -1,12 +1,14 @@
+import clsx from 'clsx';
 import Image from 'next/image';
 
 import style from './Header.module.css';
 
 interface Props {
     title: string;
+    size?: 'normal' | 'wide';
 }
 
-const Header = ({ title }: Props) => (
+const Header = ({ title, size = 'normal' }: Props) => (
     <header className={style.header}>
         <div className={style['header-img-container']}>
             <Image
@@ -22,7 +24,14 @@ const Header = ({ title }: Props) => (
             />
         </div>
         <div className="w-full px-2 sm:px-3 md:px-4 lg:px-0 flex flex-row justify-center">
-            <h1 className={style['header-title']}>{title}</h1>
+            <h1
+                className={clsx(
+                    style['header-title'],
+                    size === 'wide' && '!max-w-3xl',
+                )}
+            >
+                {title}
+            </h1>
         </div>
     </header>
 );
