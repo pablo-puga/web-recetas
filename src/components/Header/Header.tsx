@@ -2,7 +2,11 @@ import Image from 'next/image';
 
 import style from './Header.module.css';
 
-const Header = ({ isTitle = true }) => (
+interface Props {
+    title: string;
+}
+
+const Header = ({ title }: Props) => (
     <header className={style.header}>
         <div className={style['header-img-container']}>
             <Image
@@ -18,14 +22,7 @@ const Header = ({ isTitle = true }) => (
             />
         </div>
         <div className="w-full px-2 sm:px-3 md:px-4 lg:px-0 flex flex-row justify-center">
-            {isTitle && (
-                <h1 className={style['header-title']}>Las Recetas de Pablo</h1>
-            )}
-            {!isTitle && (
-                <span className={style['header-title']}>
-                    Las Recetas de Pablo
-                </span>
-            )}
+            <h1 className={style['header-title']}>{title}</h1>
         </div>
     </header>
 );

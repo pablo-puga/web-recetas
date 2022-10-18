@@ -8,6 +8,7 @@ import { RecipeList } from '../components/RecipeList';
 import { getCategories } from '../data/get-categories';
 import { getRecipes } from '../data/get-recipes-list';
 import { Category, Recipe } from '../types';
+import { PageLayout } from '../components/PageLayout';
 
 interface Props {
     categoryList: Category[];
@@ -41,21 +42,15 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const Home: NextPage<Props> = ({ categoryList, recipeList }) => {
     return (
-        <div>
+        <>
             <Head>
-                <title>Las Recetas de Pablo</title>
                 <meta name="description" content="Las Recetas de Pablo" />
             </Head>
-
-            <Header />
-
-            <main className="w-full px-2 sm:px-3 md:px-4 lg:px-0 flex flex-col items-center lg:flex-row lg:justify-center lg:items-start">
+            <PageLayout title="Las Recetas de Pablo">
                 <RecipeList recipeList={recipeList} />
                 <CategoryList categoryList={categoryList} />
-            </main>
-
-            <Footer />
-        </div>
+            </PageLayout>
+        </>
     );
 };
 
