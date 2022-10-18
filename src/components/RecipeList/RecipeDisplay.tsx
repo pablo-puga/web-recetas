@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { ReactNode } from 'react';
 import { Category, Recipe } from '../../types';
 import { CategoryBadge } from '../CategoryBadge';
 import { PublishedDate } from './PublishedDate';
@@ -6,7 +8,7 @@ interface Props {
     recipe: Recipe;
 }
 
-const Title = ({ children }: { children: string }) => (
+const Title = ({ children }: { children: ReactNode }) => (
     <h1 className="font-medium text-lg md:text-xl">{children}</h1>
 );
 
@@ -22,7 +24,13 @@ const CategoryList = ({ categories }: { categories: Category[] }) => (
 
 const RecipeDisplay = ({ recipe }: Props) => (
     <article className="bg-gray-50 drop-shadow shadow-theme-grey-dark rounded-sm px-3 py-2">
-        <Title>{recipe.title}</Title>
+        <Title>
+            <Link href={`/receta/${recipe.slug}`}>
+                <a className="transition-colors duration-150 hover:!text-theme-red visited:text-gray-500">
+                    {recipe.title}
+                </a>
+            </Link>
+        </Title>
         <PublishedDate createdAt={recipe.createdAt} />
         {recipe.categories.length > 0 && (
             <CategoryList categories={recipe.categories} />
