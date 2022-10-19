@@ -95,7 +95,6 @@ interface Props {
 }
 
 const RecipeDisplay = ({ recipe }: Props) => {
-    console.log(recipe.body);
     return (
         <article className="z-50 w-full max-w-3xl px-3 py-1 bg-gray-50 shadow shadow-theme-grey-light rounded-sm text-sm sm:text-base">
             <h1
