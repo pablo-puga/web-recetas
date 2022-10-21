@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
-import { Category, Recipe } from '../../types';
-import { CategoryBadge } from '../CategoryBadge';
+import { Recipe } from '../../types';
+import { InlineCategoryList } from '../CategoryList';
 import { PublishedDate } from './PublishedDate';
 
 interface Props {
@@ -10,16 +10,6 @@ interface Props {
 
 const Title = ({ children }: { children: ReactNode }) => (
     <h1 className="font-medium text-lg md:text-xl">{children}</h1>
-);
-
-const CategoryList = ({ categories }: { categories: Category[] }) => (
-    <ul className="flex flex-row flex-wrap mt-2 mb-1">
-        {categories.map((category) => (
-            <li key={category.id} className="ml-3 first:ml-0">
-                <CategoryBadge category={category} />
-            </li>
-        ))}
-    </ul>
 );
 
 const RecipeDisplay = ({ recipe }: Props) => (
@@ -33,7 +23,7 @@ const RecipeDisplay = ({ recipe }: Props) => (
         </Title>
         <PublishedDate createdAt={recipe.createdAt} />
         {recipe.categories.length > 0 && (
-            <CategoryList categories={recipe.categories} />
+            <InlineCategoryList categories={recipe.categories} />
         )}
     </article>
 );

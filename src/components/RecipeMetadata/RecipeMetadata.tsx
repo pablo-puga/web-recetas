@@ -1,17 +1,8 @@
 import clsx from 'clsx';
-import { Category, Recipe } from '../../types';
+import { Recipe } from '../../types';
 import { formatDateToHuman } from '../../utils/date';
-import { CategoryBadge } from '../CategoryBadge';
-
-const CategoryList = ({ categories }: { categories: Category[] }) => (
-    <ul className="inline-flex flex-row flex-wrap">
-        {categories.map((category) => (
-            <li key={category.id} className="ml-3 first:ml-0">
-                <CategoryBadge category={category} />
-            </li>
-        ))}
-    </ul>
-);
+import { InlineCategoryList } from '../CategoryList';
+import { MetadataItem } from './MetadataItem';
 
 interface Props {
     recipe: Recipe;
@@ -35,23 +26,18 @@ const RecipeMetadata = ({ recipe }: Props) => {
                 Información
             </h1>
             <ul>
-                <li>
-                    <span className="mr-2 font-medium">Publicada:</span>
-                    <span>{formatDateToHuman(recipe.createdAt)}</span>
-                </li>
+                <MetadataItem title="Publicada">
+                    {formatDateToHuman(recipe.createdAt)}
+                </MetadataItem>
                 {recipe.createdAt !== recipe.lastEditedAt && (
-                    <li className="mt-2">
-                        <span className="mr-2 font-medium">Actualizada:</span>
-                        <span>{formatDateToHuman(recipe.lastEditedAt)}</span>
-                    </li>
+                    <MetadataItem title="Actualizada">
+                        {formatDateToHuman(recipe.lastEditedAt)}
+                    </MetadataItem>
                 )}
                 {recipe.categories.length > 0 && (
-                    <li className="mt-2">
-                        <span className="mr-2 font-medium">Categorías:</span>
-                        <span>
-                            <CategoryList categories={recipe.categories} />
-                        </span>
-                    </li>
+                    <MetadataItem title="Categorías">
+                        <InlineCategoryList categories={recipe.categories} />
+                    </MetadataItem>
                 )}
             </ul>
         </section>
