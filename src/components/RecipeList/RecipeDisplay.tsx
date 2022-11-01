@@ -15,10 +15,11 @@ const Title = ({ children }: { children: ReactNode }) => (
 const RecipeDisplay = ({ recipe }: Props) => (
     <article className="bg-gray-50 drop-shadow shadow-theme-grey-dark rounded-sm px-3 py-2">
         <Title>
-            <Link href={`/receta/${recipe.slug}`}>
-                <a className="transition-colors duration-150 hover:!text-theme-red visited:text-gray-500">
-                    {recipe.title}
-                </a>
+            <Link
+                href={`/receta/${recipe.slug}`}
+                className="transition-colors duration-150 hover:!text-theme-red visited:text-gray-500"
+            >
+                {recipe.title}
             </Link>
         </Title>
         <PublishedDate createdAt={recipe.createdAt} />

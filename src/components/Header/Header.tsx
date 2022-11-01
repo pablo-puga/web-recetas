@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 import style from './Header.module.css';
 
