@@ -2,13 +2,12 @@ import Head from 'next/head';
 
 import type { GetStaticProps, NextPage } from 'next';
 import { CategoryList } from '../components/CategoryList';
-import { Footer } from '../components/Footer';
-import { Header } from '../components/Header';
+import { PageLayout } from '../components/PageLayout';
 import { RecipeList } from '../components/RecipeList';
 import { getCategories } from '../data/get-categories';
 import { getRecipes } from '../data/get-recipes-list';
 import { Category, Recipe } from '../types';
-import { PageLayout } from '../components/PageLayout';
+import { getIntEnvVar } from '../utils/env';
 
 interface Props {
     categoryList: Category[];
@@ -32,7 +31,7 @@ export const getStaticProps: GetStaticProps = async () => {
     });
 
     return {
-        revalidate: 3600 * 6,
+        revalidate: getIntEnvVar('REVALIDATE_TTL', 3600 * 6),
         props: {
             categoryList: categoryListSearch.value,
             recipeList: initialRecipeListSearch.value,

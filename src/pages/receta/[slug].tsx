@@ -1,5 +1,4 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import { PageLayout } from '../../components/PageLayout';
@@ -8,6 +7,7 @@ import { RecipeMetadata } from '../../components/RecipeMetadata/RecipeMetadata';
 import { getRecipe } from '../../data/get-recipe';
 import { getRecipes } from '../../data/get-recipes-list';
 import { RecipeWithBody } from '../../types';
+import { getIntEnvVar } from '../../utils/env';
 import { None, Option, Some } from '../../utils/option';
 
 interface Params extends ParsedUrlQuery {
@@ -68,7 +68,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
     if (recipeSearch.error) {
         console.error(recipeSearch.value.source);
         return {
-            revalidate: 3600,
+            revalidate: getIntEnvVar('REVALIDATE_ERROR_TTL', 3600),
             props: {
                 error: true,
             },
@@ -76,13 +76,13 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
     }
     if (!recipeSearch.value.has) {
         return {
-            revalidate: 3600,
+            revalidate: getIntEnvVar('REVALIDATE_ERROR_TTL', 3600),
             notFound: true,
         };
     }
 
     return {
-        revalidate: 3600 * 6,
+        revalidate: getIntEnvVar('REVALIDATE_TTL', 3600 * 6),
         props: {
             error: false,
             recipe: recipeSearch.value.some,
