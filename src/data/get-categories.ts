@@ -1,7 +1,9 @@
 import { notionClient, RECIPES_DATABASE_ID } from '../clients/notion';
 import { NotionError } from '../errors/notion-error';
-import { Category } from '../types';
-import { Err, Ok, Result } from '../utils/result';
+import { Err, Ok } from '../utils/result';
+
+import type { Category } from '../types';
+import type { Result } from '../utils/result';
 
 const getDatabaseInformation = () =>
     notionClient.databases.retrieve({

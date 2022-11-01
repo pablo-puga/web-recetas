@@ -1,4 +1,5 @@
 import { ImCalendar } from 'react-icons/im';
+
 import { formatDateToHuman } from '../../utils/date';
 
 const PublishedDate = ({ createdAt }: { createdAt: string }) => {

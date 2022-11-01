@@ -1,8 +1,11 @@
 import clsx from 'clsx';
-import { Recipe } from '../../types';
+
 import { formatDateToHuman } from '../../utils/date';
 import { InlineCategoryList } from '../CategoryList';
+
 import { MetadataItem } from './MetadataItem';
+
+import type { Recipe } from '../../types';
 
 interface Props {
     recipe: Recipe;

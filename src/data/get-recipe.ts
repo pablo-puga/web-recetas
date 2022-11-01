@@ -1,9 +1,8 @@
 import { isFullBlock, isFullPage } from '@notionhq/client';
-import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints';
+
 import { notionClient, RECIPES_DATABASE_ID } from '../clients/notion';
 import { NotionError } from '../errors/notion-error';
-import { Recipe, RecipeWithBody } from '../types';
-import { None, Option, Some } from '../utils/option';
+import { None, Some } from '../utils/option';
 import {
     BR,
     H2,
@@ -11,14 +10,19 @@ import {
     H4,
     OL,
     P,
-    PageBlock,
     PlainText,
     SpanBlock,
-    TextContent,
     UL,
 } from '../utils/page-blocks';
-import { Err, Ok, Result } from '../utils/result';
+import { Err, Ok } from '../utils/result';
+
 import { getPageCategories, getPageTitle } from './notion/properties';
+
+import type { Recipe, RecipeWithBody } from '../types';
+import type { Option } from '../utils/option';
+import type { PageBlock, TextContent } from '../utils/page-blocks';
+import type { Result } from '../utils/result';
+import type { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints';
 
 const getBaseRecipe = async (slug: string): Promise<Option<Recipe>> => {
     const recipe = await notionClient.databases.query({

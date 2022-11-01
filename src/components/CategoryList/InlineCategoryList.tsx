@@ -1,5 +1,6 @@
-import { Category } from '../../types';
 import { CategoryBadge } from '../CategoryBadge';
+
+import type { Category } from '../../types';
 
 const InlineCategoryList = ({ categories }: { categories: Category[] }) => (
     <ul className="inline-flex flex-row flex-wrap">

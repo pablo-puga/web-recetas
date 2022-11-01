@@ -1,4 +1,4 @@
-import { PageBlock } from './utils/page-blocks';
+import type { PageBlock } from './utils/page-blocks';
 
 export interface Category {
     name: string;

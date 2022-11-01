@@ -1,4 +1,5 @@
 import { Head, Html, Main, NextScript } from 'next/document';
+
 import { getStringEnvVar } from '../utils/env';
 
 const BASE_URL = getStringEnvVar('BASE_URL', 'http://localhost:3000');

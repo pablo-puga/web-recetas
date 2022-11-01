@@ -1,8 +1,11 @@
 import clsx from 'clsx';
-import { Fragment, ReactNode } from 'react';
-import { RecipeWithBody } from '../../types';
+import { Fragment } from 'react';
+
 import { stringColorToTheme } from '../../utils/colors';
-import { PageBlock, TextContent } from '../../utils/page-blocks';
+
+import type { RecipeWithBody } from '../../types';
+import type { PageBlock, TextContent } from '../../utils/page-blocks';
+import type { ReactNode } from 'react';
 
 const textContentBlockToReactNode = (
     block: TextContent,

@@ -1,14 +1,17 @@
-import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { ParsedUrlQuery } from 'querystring';
+
 import { PageLayout } from '../../components/PageLayout';
 import { RecipeDisplay } from '../../components/RecipeDisplay';
 import { RecipeMetadata } from '../../components/RecipeMetadata/RecipeMetadata';
 import { getRecipe } from '../../data/get-recipe';
 import { getRecipes } from '../../data/get-recipes-list';
-import { RecipeWithBody } from '../../types';
 import { getIntEnvVar } from '../../utils/env';
-import { None, Option, Some } from '../../utils/option';
+import { None, Some } from '../../utils/option';
+
+import type { RecipeWithBody } from '../../types';
+import type { Option } from '../../utils/option';
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import type { ParsedUrlQuery } from 'querystring';
 
 interface Params extends ParsedUrlQuery {
     slug: string;
@@ -34,7 +37,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
 
     return {
-        paths: recipesSearch.value.map((recipe) => ({
+        paths: recipesSearch.value.recipes.map((recipe) => ({
             params: { slug: recipe.slug },
         })),
         fallback: true,

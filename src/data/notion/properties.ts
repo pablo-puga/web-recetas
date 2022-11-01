@@ -1,6 +1,8 @@
-import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
-import { Category } from '../../types';
-import { None, Some, Option } from '../../utils/option';
+import { None, Some } from '../../utils/option';
+
+import type { Category } from '../../types';
+import type { Option } from '../../utils/option';
+import type { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 
 const CATEGORY_PROPERTY_NAME = 'Categorias';
 const SLUG_PROPERTY_NAME = 'Slug';

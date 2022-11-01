@@ -1,4 +1,6 @@
-import { isNotionClientError, NotionClientError } from '@notionhq/client';
+import { isNotionClientError } from '@notionhq/client';
+
+import type { NotionClientError } from '@notionhq/client';
 
 interface NotionError extends Error {
     readonly type: 'NotionError';

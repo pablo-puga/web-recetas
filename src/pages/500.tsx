@@ -1,4 +1,5 @@
 import Head from 'next/head';
+
 import { ErrorDisplay } from '../components/ErrorDisplay';
 import { PageLayout } from '../components/PageLayout';
 

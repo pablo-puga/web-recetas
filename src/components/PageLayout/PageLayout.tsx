@@ -1,9 +1,12 @@
 import splitbee from '@splitbee/web';
 import clsx from 'clsx';
 import Head from 'next/head';
-import { ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
+
 import { Footer } from '../Footer';
 import { Header } from '../Header';
+
+import type { ReactNode } from 'react';
 
 interface Props {
     title: string;
@@ -30,6 +33,7 @@ const PageLayout = ({
         <>
             <Head>
                 <title>{title}</title>
+                <meta name="robots" content="noarchive" />
             </Head>
             <Header title={title} size={headerSize} />
             <main

@@ -1,7 +1,8 @@
-import { Category } from '../../types';
 import { CategoryBadge } from '../CategoryBadge';
 
 import style from './CategoryList.module.css';
+
+import type { Category } from '../../types';
 
 interface Props {
     categoryList: Category[];

@@ -1,18 +1,22 @@
 import { isFullPage } from '@notionhq/client';
-import {
-    PageObjectResponse,
-    PartialPageObjectResponse,
-} from '@notionhq/client/build/src/api-endpoints';
+
 import { notionClient, RECIPES_DATABASE_ID } from '../clients/notion';
 import { NotionError } from '../errors/notion-error';
-import { Recipe } from '../types';
-import { Err, Ok, Result } from '../utils/result';
+import { Err, Ok } from '../utils/result';
+
 import {
     getPageCategories,
     getPageSlug,
     getPageTitle,
     SLUG_PROPERTY_NAME,
 } from './notion/properties';
+
+import type { Recipe } from '../types';
+import type { Result } from '../utils/result';
+import type {
+    PageObjectResponse,
+    PartialPageObjectResponse,
+} from '@notionhq/client/build/src/api-endpoints';
 
 const PUBLISHED_PROPERTY_NAME = 'Publicada';
 
@@ -39,13 +43,15 @@ const parseRecipeList = (
     return recipePages;
 };
 
-const getAllRecipes = async (): Promise<Result<Recipe[], NotionError>> =>
-    getRecipes(100);
+interface RecipesWithMetadata {
+    recipes: Recipe[];
+    nextCursor?: string;
+}
 
 const getRecipes = async (
     pageSize = 10,
-    nextCursor?: string,
-): Promise<Result<Recipe[], NotionError>> => {
+    nextCursor?: string | undefined,
+): Promise<Result<RecipesWithMetadata, NotionError>> => {
     try {
         const pages = await notionClient.databases.query({
             database_id: RECIPES_DATABASE_ID,
@@ -75,11 +81,31 @@ const getRecipes = async (
             start_cursor: nextCursor,
         });
 
-        return Ok(parseRecipeList(pages.results));
+        return Ok({
+            recipes: parseRecipeList(pages.results),
+            nextCursor:
+                pages.has_more && pages.next_cursor
+                    ? pages.next_cursor
+                    : undefined,
+        });
     } catch (e) {
         if (e instanceof Error) return Err(new NotionError(e));
         return Err(new NotionError(new Error(JSON.stringify(e))));
     }
+};
+
+const getAllRecipes = async (): Promise<Result<Recipe[], NotionError>> => {
+    let recipes: Recipe[] = [];
+    let nextCursor: string | undefined = undefined;
+    do {
+        const recipeSearch = await getRecipes(100, nextCursor);
+        if (!recipeSearch.ok) return recipeSearch;
+        recipes = recipes.concat(recipeSearch.value.recipes);
+
+        nextCursor = recipeSearch.value.nextCursor as string;
+    } while (nextCursor !== undefined);
+
+    return Ok(recipes);
 };
 
 export { getAllRecipes, getRecipes };

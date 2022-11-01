@@ -1,8 +1,11 @@
 import Link from 'next/link';
-import { ReactNode } from 'react';
-import { Recipe } from '../../types';
+
 import { InlineCategoryList } from '../CategoryList';
+
 import { PublishedDate } from './PublishedDate';
+
+import type { Recipe } from '../../types';
+import type { ReactNode } from 'react';
 
 interface Props {
     recipe: Recipe;

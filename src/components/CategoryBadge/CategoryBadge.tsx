@@ -1,7 +1,9 @@
-import Link from 'next/link';
-import { Category } from '../../types';
 import clsx from 'clsx';
+import Link from 'next/link';
+
 import { stringColorToTheme } from '../../utils/colors';
+
+import type { Category } from '../../types';
 
 interface Props {
     category: Category;
