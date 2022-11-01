@@ -1,6 +1,7 @@
+import splitbee from '@splitbee/web';
 import clsx from 'clsx';
 import Head from 'next/head';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Footer } from '../Footer';
 import { Header } from '../Header';
 
@@ -17,6 +18,14 @@ const PageLayout = ({
     className,
     headerSize = 'normal',
 }: Props) => {
+    useEffect(() => {
+        splitbee.init({
+            scriptUrl: '/bee.js',
+            apiUrl: '/_hive',
+            disableCookie: true,
+        });
+    }, []);
+
     return (
         <>
             <Head>

@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^2.2.1",
+    "@splitbee/web": "^0.3.0",
     "clsx": "^1.2.1",
     "next": "^13.0.1",
     "react": "^18.2.0",
