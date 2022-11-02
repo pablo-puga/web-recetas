@@ -1,7 +1,9 @@
 import splitbee from '@splitbee/web';
 import clsx from 'clsx';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useEffect } from 'react';
+import { MdOutlineFoodBank } from 'react-icons/md';
 
 import { Footer } from '../Footer';
 import { Header } from '../Header';
@@ -13,6 +15,7 @@ interface Props {
     children: ReactNode | ReactNode[];
     className?: string;
     headerSize?: 'normal' | 'wide';
+    showHomeLink?: boolean;
 }
 
 const PageLayout = ({
@@ -20,6 +23,7 @@ const PageLayout = ({
     children,
     className,
     headerSize = 'normal',
+    showHomeLink = true,
 }: Props) => {
     useEffect(() => {
         splitbee.init({
@@ -42,6 +46,20 @@ const PageLayout = ({
                     className,
                 )}
             >
+                {showHomeLink && (
+                    <nav className="fixed top-2 left-2 bg-theme-white/80 hover:bg-theme-orange/80 transition-colors duration-150 rounded-sm shadow-sm">
+                        <Link
+                            href="/"
+                            className="flex flex-row items-center px-1 py-1"
+                            title="Página de inicio"
+                        >
+                            <MdOutlineFoodBank className="text-2xl sm:text-3xl transition duration-150" />
+                            <span className="px-2 hidden sm:block text-lg font-medium">
+                                Inicio
+                            </span>
+                        </Link>
+                    </nav>
+                )}
                 {children}
             </main>
             <Footer />

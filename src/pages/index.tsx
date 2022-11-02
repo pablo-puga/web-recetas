@@ -57,7 +57,7 @@ const Home: NextPage<Props> = ({
             <Head>
                 <meta name="description" content="Las Recetas de Pablo" />
             </Head>
-            <PageLayout title="Las Recetas de Pablo">
+            <PageLayout title="Las Recetas de Pablo" showHomeLink={false}>
                 <PaginatedRecipeList
                     recipeList={recipeList}
                     totalRecipes={totalRecipes}
