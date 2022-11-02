@@ -41,13 +41,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
             ? totalPages
             : INITIAL_PAGINATION_ISG;
 
+    const paths = Array.from(
+        {
+            length: maxInitialPages,
+        },
+        (v, k) => k + 1,
+    ).map((pageNumber) => ({ params: { page: `${pageNumber}` } }));
     return {
-        paths: Array.from(
-            {
-                length: maxInitialPages,
-            },
-            (v, k) => k + 1,
-        ).map((pageNumber) => ({ params: { page: `${pageNumber}` } })),
+        paths: paths.slice(1),
         fallback: true,
     };
 };
