@@ -1,8 +1,10 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import { CategoryList } from '../../components/CategoryList';
 import { PageLayout } from '../../components/PageLayout';
 import { PaginatedRecipeList } from '../../components/RecipeList/PaginatedRecipeList';
+import { RecipeListSkeleton } from '../../components/Skeleton';
 import { getCategories } from '../../data/get-categories';
 import { getAllRecipes } from '../../data/get-recipes-list';
 import { getIntEnvVar } from '../../utils/env';
@@ -34,14 +36,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
 
     const totalPages = Math.ceil(allRecipesSearch.value.length / PAGE_SIZE);
+    const maxInitialPages =
+        totalPages < INITIAL_PAGINATION_ISG
+            ? totalPages
+            : INITIAL_PAGINATION_ISG;
 
     return {
         paths: Array.from(
             {
-                length:
-                    totalPages < INITIAL_PAGINATION_ISG
-                        ? totalPages
-                        : INITIAL_PAGINATION_ISG,
+                length: maxInitialPages,
             },
             (v, k) => k + 1,
         ).map((pageNumber) => ({ params: { page: `${pageNumber}` } })),
@@ -94,6 +97,21 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
         throw allRecipesSearch.value.source;
     }
 
+    const displayedRecipes = allRecipesSearch.value.slice(
+        PAGE_SIZE * (currentPage.some - 1),
+        PAGE_SIZE * currentPage.some,
+    );
+
+    if (displayedRecipes.length === 0) {
+        return {
+            revalidate: getIntEnvVar('REVALIDATE_NOTFOUND_TTL', 3600),
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        };
+    }
+
     const categoryListSearch = await getCategories();
     if (categoryListSearch.error) {
         throw categoryListSearch.value.source;
@@ -108,10 +126,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
         revalidate: getIntEnvVar('REVALIDATE_TTL', 3600 * 6),
         props: {
             categoryList: categoryListSearch.value,
-            recipeList: allRecipesSearch.value.slice(
-                PAGE_SIZE * (currentPage.some - 1),
-                PAGE_SIZE * currentPage.some,
-            ),
+            recipeList: displayedRecipes,
             pageSize: PAGE_SIZE,
             totalRecipes: allRecipesSearch.value.length,
             currentPage: currentPage.some,
@@ -126,16 +141,23 @@ const Page: NextPage<Props> = ({
     pageSize,
     currentPage,
 }) => {
+    const router = useRouter();
+
     return (
         <>
             <PageLayout title="Las Recetas de Pablo">
-                <PaginatedRecipeList
-                    recipeList={recipeList}
-                    totalRecipes={totalRecipes}
-                    currentPage={currentPage}
-                    pageSize={pageSize}
-                />
-                <CategoryList categoryList={categoryList} />
+                {router.isFallback && <RecipeListSkeleton />}
+                {!router.isFallback && (
+                    <>
+                        <PaginatedRecipeList
+                            recipeList={recipeList}
+                            totalRecipes={totalRecipes}
+                            currentPage={currentPage}
+                            pageSize={pageSize}
+                        />
+                        <CategoryList categoryList={categoryList} />
+                    </>
+                )}
             </PageLayout>
             <Head>
                 <meta name="description" content="Las Recetas de Pablo" />

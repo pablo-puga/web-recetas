@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { PageLayout } from '../../components/PageLayout';
 import { RecipeDisplay } from '../../components/RecipeDisplay';
 import { RecipeMetadata } from '../../components/RecipeMetadata/RecipeMetadata';
+import { RecipeDisplaySkeleton } from '../../components/Skeleton';
 import { getRecipe } from '../../data/get-recipe';
 import { getRecipes } from '../../data/get-recipes-list';
 import { getIntEnvVar } from '../../utils/env';
@@ -79,7 +80,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
     }
     if (!recipeSearch.value.has) {
         return {
-            revalidate: getIntEnvVar('REVALIDATE_ERROR_TTL', 3600),
+            revalidate: getIntEnvVar('REVALIDATE_NOTFOUND_TTL', 3600),
             notFound: true,
         };
     }
@@ -95,9 +96,6 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
 
 const RecipePage: NextPage<Props> = (props) => {
     const router = useRouter();
-    if (router.isFallback) {
-        return <div>Loading...</div>;
-    }
 
     if (props.error) {
         return <h1>Unexpected error</h1>;
@@ -106,12 +104,17 @@ const RecipePage: NextPage<Props> = (props) => {
     const recipe = props.recipe;
     return (
         <PageLayout
-            title={recipe.title}
+            title={router.isFallback ? 'Cargando...' : recipe.title}
             className="lg:!flex-col lg:!justify-start lg:!items-center"
             headerSize="wide"
         >
-            <RecipeMetadata recipe={recipe} />
-            <RecipeDisplay recipe={recipe} />
+            {router.isFallback && <RecipeDisplaySkeleton />}
+            {!router.isFallback && (
+                <>
+                    <RecipeMetadata recipe={recipe} />
+                    <RecipeDisplay recipe={recipe} />
+                </>
+            )}
         </PageLayout>
     );
 };
