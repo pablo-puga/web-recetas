@@ -154,6 +154,7 @@ const Page: NextPage<Props> = ({
                             totalRecipes={totalRecipes}
                             currentPage={currentPage}
                             pageSize={pageSize}
+                            baseUrl=""
                         />
                         <CategoryList categoryList={categoryList} />
                     </>

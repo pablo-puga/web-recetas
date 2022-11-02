@@ -63,6 +63,7 @@ const Home: NextPage<Props> = ({
                     totalRecipes={totalRecipes}
                     currentPage={1}
                     pageSize={pageSize}
+                    baseUrl=""
                 />
                 <CategoryList categoryList={categoryList} />
             </PageLayout>

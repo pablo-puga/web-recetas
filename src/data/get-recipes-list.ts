@@ -5,6 +5,7 @@ import { NotionError } from '../errors/notion-error';
 import { Err, Ok } from '../utils/result';
 
 import {
+    CATEGORY_PROPERTY_NAME,
     getPageCategories,
     getPageSlug,
     getPageTitle,
@@ -16,6 +17,7 @@ import type { Result } from '../utils/result';
 import type {
     PageObjectResponse,
     PartialPageObjectResponse,
+    QueryDatabaseResponse,
 } from '@notionhq/client/build/src/api-endpoints';
 
 const PUBLISHED_PROPERTY_NAME = 'Publicada';
@@ -50,36 +52,74 @@ interface RecipesWithMetadata {
 
 const getRecipes = async (
     pageSize = 10,
+    category?: string | undefined,
     nextCursor?: string | undefined,
 ): Promise<Result<RecipesWithMetadata, NotionError>> => {
+    let pages: QueryDatabaseResponse;
     try {
-        const pages = await notionClient.databases.query({
-            database_id: RECIPES_DATABASE_ID,
-            filter: {
-                and: [
-                    {
-                        property: PUBLISHED_PROPERTY_NAME,
-                        checkbox: {
-                            equals: true,
+        if (category) {
+            pages = await notionClient.databases.query({
+                database_id: RECIPES_DATABASE_ID,
+                filter: {
+                    and: [
+                        {
+                            property: PUBLISHED_PROPERTY_NAME,
+                            checkbox: {
+                                equals: true,
+                            },
                         },
-                    },
-                    {
-                        property: SLUG_PROPERTY_NAME,
-                        rich_text: {
-                            is_not_empty: true,
+                        {
+                            property: SLUG_PROPERTY_NAME,
+                            rich_text: {
+                                is_not_empty: true,
+                            },
                         },
+                        {
+                            property: CATEGORY_PROPERTY_NAME,
+                            multi_select: {
+                                contains: category,
+                            },
+                        },
+                    ],
+                },
+                sorts: [
+                    {
+                        timestamp: 'created_time',
+                        direction: 'descending',
                     },
                 ],
-            },
-            sorts: [
-                {
-                    timestamp: 'created_time',
-                    direction: 'descending',
+                page_size: pageSize,
+                start_cursor: nextCursor,
+            });
+        } else {
+            pages = await notionClient.databases.query({
+                database_id: RECIPES_DATABASE_ID,
+                filter: {
+                    and: [
+                        {
+                            property: PUBLISHED_PROPERTY_NAME,
+                            checkbox: {
+                                equals: true,
+                            },
+                        },
+                        {
+                            property: SLUG_PROPERTY_NAME,
+                            rich_text: {
+                                is_not_empty: true,
+                            },
+                        },
+                    ],
                 },
-            ],
-            page_size: pageSize,
-            start_cursor: nextCursor,
-        });
+                sorts: [
+                    {
+                        timestamp: 'created_time',
+                        direction: 'descending',
+                    },
+                ],
+                page_size: pageSize,
+                start_cursor: nextCursor,
+            });
+        }
 
         return Ok({
             recipes: parseRecipeList(pages.results),
@@ -98,7 +138,7 @@ const getAllRecipes = async (): Promise<Result<Recipe[], NotionError>> => {
     let recipes: Recipe[] = [];
     let nextCursor: string | undefined = undefined;
     do {
-        const recipeSearch = await getRecipes(100, nextCursor);
+        const recipeSearch = await getRecipes(100, undefined, nextCursor);
         if (!recipeSearch.ok) return recipeSearch;
         recipes = recipes.concat(recipeSearch.value.recipes);
 
@@ -108,4 +148,20 @@ const getAllRecipes = async (): Promise<Result<Recipe[], NotionError>> => {
     return Ok(recipes);
 };
 
-export { getAllRecipes, getRecipes };
+const getAllRecipesForCategory = async (
+    category: string,
+): Promise<Result<Recipe[], NotionError>> => {
+    let recipes: Recipe[] = [];
+    let nextCursor: string | undefined = undefined;
+    do {
+        const recipeSearch = await getRecipes(100, category, nextCursor);
+        if (!recipeSearch.ok) return recipeSearch;
+        recipes = recipes.concat(recipeSearch.value.recipes);
+
+        nextCursor = recipeSearch.value.nextCursor as string;
+    } while (nextCursor !== undefined);
+
+    return Ok(recipes);
+};
+
+export { getAllRecipes, getRecipes, getAllRecipesForCategory };
