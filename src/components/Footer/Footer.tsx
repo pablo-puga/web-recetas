@@ -4,7 +4,7 @@ const version = process.env.version;
 
 const Footer = () => {
     return (
-        <footer className="mt-8 mb-10 text-gray-600 text-center text-sm">
+        <footer className="mt-9 sm:mt-11 md:mt-12 lg:mt-14 mb-10 text-gray-600 text-center text-sm">
             <p>
                 También puedes ver mi página web en{' '}
                 <a
