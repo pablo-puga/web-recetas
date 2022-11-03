@@ -9,6 +9,7 @@ import { getCategories } from '../../data/get-categories';
 import { getAllRecipes } from '../../data/get-recipes-list';
 import { getIntEnvVar } from '../../utils/env';
 import { None, Some } from '../../utils/option';
+import { genPages } from '../../utils/pagination';
 
 import type { Category, Recipe } from '../../types';
 import type { Option } from '../../utils/option';
@@ -41,14 +42,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
             ? totalPages
             : INITIAL_PAGINATION_ISG;
 
-    const paths = Array.from(
-        {
-            length: maxInitialPages,
-        },
-        (v, k) => k + 1,
-    ).map((pageNumber) => ({ params: { page: `${pageNumber}` } }));
     return {
-        paths: paths.slice(1),
+        paths: genPages(maxInitialPages).map((pageNumber) => ({
+            params: { page: `${pageNumber}` },
+        })),
         fallback: true,
     };
 };

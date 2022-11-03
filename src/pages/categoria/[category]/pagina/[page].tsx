@@ -9,6 +9,7 @@ import { getCategories } from '../../../../data/get-categories';
 import { getAllRecipesForCategory } from '../../../../data/get-recipes-list';
 import { getIntEnvVar } from '../../../../utils/env';
 import { None, Some } from '../../../../utils/option';
+import { genPages } from '../../../../utils/pagination';
 
 import type { Recipe, Category } from '../../../../types';
 import type { Option } from '../../../../utils/option';
@@ -55,14 +56,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
                 ? totalPages
                 : INITIAL_PAGINATION_ISG;
 
-        Array.from({ length: maxInitialPages }, (v, k) => k + 1).forEach(
-            (pageNumber) =>
-                paths.push({
-                    params: {
-                        category: category.name.toLowerCase(),
-                        page: `${pageNumber}`,
-                    },
-                }),
+        genPages(maxInitialPages).forEach((pageNumber) =>
+            paths.push({
+                params: {
+                    category: category.name.toLowerCase(),
+                    page: `${pageNumber}`,
+                },
+            }),
         );
         process.env.NODE_ENV === 'production' && (await sleep(500));
     }
