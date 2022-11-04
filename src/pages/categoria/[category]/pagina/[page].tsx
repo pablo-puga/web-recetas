@@ -9,66 +9,20 @@ import { getCategories } from '../../../../data/get-categories';
 import { getAllRecipesForCategory } from '../../../../data/get-recipes-list';
 import { getIntEnvVar } from '../../../../utils/env';
 import { None, Some } from '../../../../utils/option';
-import { genPages } from '../../../../utils/pagination';
 
 import type { Recipe, Category } from '../../../../types';
 import type { Option } from '../../../../utils/option';
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 
-const PAGE_SIZE = getIntEnvVar('PAGE_SIZE', 10);
-const INITIAL_PAGINATION_ISG = 2;
-
 interface Params extends ParsedUrlQuery {
     page: string;
     category: string;
 }
 
-type Path = { params: { category: string; page: string } };
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export const getStaticPaths: GetStaticPaths = async () => {
-    const categoryListSearch = await getCategories();
-    if (categoryListSearch.error) {
-        throw categoryListSearch.value.source;
-    }
-
-    const paths: Path[] = [];
-
-    for (const category of categoryListSearch.value) {
-        const allRecipesForCategory = await getAllRecipesForCategory(
-            category.name,
-        );
-        if (allRecipesForCategory.error) {
-            throw allRecipesForCategory.value.source;
-        }
-
-        if (allRecipesForCategory.value.length < PAGE_SIZE) {
-            continue;
-        }
-
-        const totalPages = Math.ceil(
-            allRecipesForCategory.value.length / PAGE_SIZE,
-        );
-        const maxInitialPages =
-            totalPages < INITIAL_PAGINATION_ISG
-                ? totalPages
-                : INITIAL_PAGINATION_ISG;
-
-        genPages(maxInitialPages).forEach((pageNumber) =>
-            paths.push({
-                params: {
-                    category: category.name.toLowerCase(),
-                    page: `${pageNumber}`,
-                },
-            }),
-        );
-        process.env.NODE_ENV === 'production' && (await sleep(500));
-    }
-
     return {
-        paths,
+        paths: [],
         fallback: true,
     };
 };
@@ -144,6 +98,8 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
             },
         };
     }
+
+    const PAGE_SIZE = getIntEnvVar('PAGE_SIZE', 10);
 
     const allRecipesSearch = await getAllRecipesForCategory(
         currentCategoryCapitalized,

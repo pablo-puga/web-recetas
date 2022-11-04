@@ -1,9 +1,10 @@
 import { getAllRecipes } from '../data/get-recipes-list';
-import { getStringEnvVar } from '../utils/env';
+import { getIntEnvVar, getStringEnvVar } from '../utils/env';
 
 import type { GetServerSideProps } from 'next';
 
 const BASE_URL = getStringEnvVar('BASE_URL', 'http://localhost:3000');
+const REVALIDATE_TTL = getIntEnvVar('REVALIDATE_TTL', 3600 * 6);
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     const allRecipesSearch = await getAllRecipes();
@@ -29,6 +30,10 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
         .join('\n    ')}
 </urlset>
 `;
+    res.setHeader(
+        'Cache-Control',
+        `public, s-maxage=${REVALIDATE_TTL}, stale-while-revalidate=${REVALIDATE_TTL}`,
+    );
     res.setHeader('Content-Type', 'application/xml');
     res.write(xml);
     res.end();

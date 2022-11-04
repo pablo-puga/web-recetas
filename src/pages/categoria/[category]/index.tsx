@@ -31,15 +31,8 @@ interface Props {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const categoryListSearch = await getCategories();
-    if (categoryListSearch.error) {
-        throw categoryListSearch.value.source;
-    }
-
     return {
-        paths: categoryListSearch.value.map((category) => ({
-            params: { category: category.name.toLowerCase() },
-        })),
+        paths: [],
         fallback: true,
     };
 };
@@ -130,7 +123,13 @@ const Category: NextPage<Props> = ({
 
     return (
         <>
-            <PageLayout title={`Categoría: ${currentCategory}`}>
+            <PageLayout
+                title={
+                    router.isFallback
+                        ? 'Cargando...'
+                        : `Categoría: ${currentCategory}`
+                }
+            >
                 {router.isFallback && <RecipeListSkeleton />}
                 {!router.isFallback && (
                     <>

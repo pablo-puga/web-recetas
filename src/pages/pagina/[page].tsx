@@ -9,43 +9,19 @@ import { getCategories } from '../../data/get-categories';
 import { getAllRecipes } from '../../data/get-recipes-list';
 import { getIntEnvVar } from '../../utils/env';
 import { None, Some } from '../../utils/option';
-import { genPages } from '../../utils/pagination';
 
 import type { Category, Recipe } from '../../types';
 import type { Option } from '../../utils/option';
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 
-const PAGE_SIZE = getIntEnvVar('PAGE_SIZE', 10);
-const INITIAL_PAGINATION_ISG = getIntEnvVar('INITIAL_PAGINATION_ISG', 5);
-
 interface Params extends ParsedUrlQuery {
     page: string;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const allRecipesSearch = await getAllRecipes();
-    if (allRecipesSearch.error) {
-        throw allRecipesSearch.value.source;
-    }
-
-    if (allRecipesSearch.value.length < PAGE_SIZE) {
-        return {
-            paths: [],
-            fallback: true,
-        };
-    }
-
-    const totalPages = Math.ceil(allRecipesSearch.value.length / PAGE_SIZE);
-    const maxInitialPages =
-        totalPages < INITIAL_PAGINATION_ISG
-            ? totalPages
-            : INITIAL_PAGINATION_ISG;
-
     return {
-        paths: genPages(maxInitialPages).map((pageNumber) => ({
-            params: { page: `${pageNumber}` },
-        })),
+        paths: [],
         fallback: true,
     };
 };
@@ -81,14 +57,21 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
         };
     }
 
-    if (currentPage.some === 1) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: true,
-            },
-        };
-    }
+    // if (currentPage.some === 1) {
+    //     return {
+    //         redirect: {
+    //             destination: '/',
+    //             permanent: true,
+    //         },
+    //     };
+    // }
+
+    const PAGE_SIZE = getIntEnvVar('PAGE_SIZE', 10);
+    const REVALIDATE_NOTFOUND_TTL = getIntEnvVar(
+        'REVALIDATE_NOTFOUND_TTL',
+        3600,
+    );
+    const REVALIDATE_TTL = getIntEnvVar('REVALIDATE_TTL', 3600 * 6);
 
     const allRecipesSearch = await getAllRecipes();
     if (allRecipesSearch.error) {
@@ -102,7 +85,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
 
     if (displayedRecipes.length === 0) {
         return {
-            revalidate: getIntEnvVar('REVALIDATE_NOTFOUND_TTL', 3600),
+            revalidate: REVALIDATE_NOTFOUND_TTL,
             redirect: {
                 destination: '/',
                 permanent: false,
@@ -121,7 +104,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
     });
 
     return {
-        revalidate: getIntEnvVar('REVALIDATE_TTL', 3600 * 6),
+        revalidate: REVALIDATE_TTL,
         props: {
             categoryList: categoryListSearch.value,
             recipeList: displayedRecipes,

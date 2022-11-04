@@ -5,7 +5,6 @@ import { RecipeDisplay } from '../../components/RecipeDisplay';
 import { RecipeMetadata } from '../../components/RecipeMetadata/RecipeMetadata';
 import { RecipeDisplaySkeleton } from '../../components/Skeleton';
 import { getRecipe } from '../../data/get-recipe';
-import { getRecipes } from '../../data/get-recipes-list';
 import { getIntEnvVar } from '../../utils/env';
 import { None, Some } from '../../utils/option';
 
@@ -18,29 +17,13 @@ interface Params extends ParsedUrlQuery {
     slug: string;
 }
 
-type Props =
-    | {
-          error: true;
-      }
-    | {
-          error: false;
-          recipe: RecipeWithBody;
-      };
+type Props = {
+    recipe: RecipeWithBody;
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const recipesSearch = await getRecipes(20);
-    if (!recipesSearch.ok) {
-        console.error(recipesSearch.value.source);
-        return {
-            paths: [],
-            fallback: true,
-        };
-    }
-
     return {
-        paths: recipesSearch.value.recipes.map((recipe) => ({
-            params: { slug: recipe.slug },
-        })),
+        paths: [],
         fallback: true,
     };
 };
@@ -70,14 +53,9 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
 
     const recipeSearch = await getRecipe(slug.some);
     if (recipeSearch.error) {
-        console.error(recipeSearch.value.source);
-        return {
-            revalidate: getIntEnvVar('REVALIDATE_ERROR_TTL', 3600),
-            props: {
-                error: true,
-            },
-        };
+        throw new Error('ERROR PRUEBA ERROR PRUEBA');
     }
+
     if (!recipeSearch.value.has) {
         return {
             revalidate: getIntEnvVar('REVALIDATE_NOTFOUND_TTL', 3600),
@@ -88,7 +66,6 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
     return {
         revalidate: getIntEnvVar('REVALIDATE_TTL', 3600 * 6),
         props: {
-            error: false,
             recipe: recipeSearch.value.some,
         },
     };
@@ -97,11 +74,8 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
 const RecipePage: NextPage<Props> = (props) => {
     const router = useRouter();
 
-    if (props.error) {
-        return <h1>Unexpected error</h1>;
-    }
+    const { recipe } = props;
 
-    const recipe = props.recipe;
     return (
         <PageLayout
             title={router.isFallback ? 'Cargando...' : recipe.title}
