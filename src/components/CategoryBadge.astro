@@ -1,0 +1,11 @@
+---
+interface Props {
+    name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<a href={`/categoria/${name.toLocaleLowerCase()}`}>
+    {name}
+</a>

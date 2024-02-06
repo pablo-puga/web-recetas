@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+
+import CategoryList from '../../components/CategoryList.astro';
+import Layout from '../../layouts/Layout.astro';
+
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+
+export const prerender = true;
+export const getStaticPaths = (async () => {
+    const recipes = await getCollection('recipes', ({ data }) => {
+        return import.meta.env.PROD ? data.published === true : true;
+    });
+
+    const categories: string[] = [];
+
+    recipes.forEach((recipe) => {
+        recipe.data.categories.forEach((c) => {
+            if (categories.includes(c)) return;
+            categories.push(c);
+        });
+    });
+
+    categories.sort();
+
+    return recipes.map((recipe) => ({
+        params: {
+            slug: recipe.slug,
+        },
+        props: {
+            recipe,
+            categories,
+        },
+    }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { recipe, categories } = Astro.props;
+const { Content } = await recipe.render();
+---
+
+<Layout title={recipe.data.title}>
+    <main>
+        <CategoryList categories={categories} />
+        <Content />
+    </main>
+</Layout>
