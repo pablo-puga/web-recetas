@@ -3,6 +3,7 @@
 /// <reference types="astro/client" />
 interface ImportMetaEnv {
     readonly APP_URL: string;
+    readonly RECIPES_PER_PAGE: number;
 }
 
 interface ImportMeta {

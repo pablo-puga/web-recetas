@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+
+import Layout from '@layouts/Layout.astro';
+
+export const RECIPES_PER_PAGE = import.meta.env.RECIPES_PER_PAGE || 10;
+export const prerender = true;
+export const getStaticPaths = (async ({ paginate }) => {
+    const recipes = await getCollection('recipes', ({ data }) => {
+        return import.meta.env.PROD ? data.published === true : true;
+    });
+
+    recipes.sort(
+        (a, b) => b.data.created_at.getTime() - a.data.created_at.getTime(),
+    );
+
+    return paginate(recipes, { pageSize: RECIPES_PER_PAGE });
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { page } = Astro.props;
+---
+
+<Layout title={`Las Recetas de Pablo | Página ${page.currentPage}`}>
+    <h1>
+        Página {page.currentPage} de {page.lastPage}
+    </h1>
+    <ul>
+        {
+            page.data.map((recipe) => (
+                <li>
+                    <article>
+                        <>
+                            <h1>{recipe.data.title}</h1>
+                            <time>{recipe.data.created_at}</time>
+                        </>
+                    </article>
+                </li>
+            ))
+        }
+    </ul>
+    {page.url.prev ? <a href={page.url.prev}>Anterior</a> : null}
+    {page.url.next ? <a href={page.url.next}>Siguiente</a> : null}
+</Layout>

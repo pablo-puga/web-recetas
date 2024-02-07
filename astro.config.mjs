@@ -14,10 +14,15 @@ export default defineConfig({
         mdx(),
         sitemap({
             lastmod: new Date().new,
+            filter: (page) => !page.includes('/pagina'),
+            customPages: [`${process.env.APP_URL || 'http://localhost:4321'}`],
         }),
     ],
     output: 'server',
     adapter: node({
         mode: 'standalone',
     }),
+    redirects: {
+        '/': '/pagina/1',
+    },
 });

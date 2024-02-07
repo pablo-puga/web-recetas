@@ -1,10 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
-import CategoryList from '../../components/CategoryList.astro';
-import Layout from '../../layouts/Layout.astro';
-
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+
+import CategoryList from '@components/CategoryList.astro';
+import Layout from '@layouts/Layout.astro';
 
 export const prerender = true;
 export const getStaticPaths = (async () => {
@@ -42,6 +43,14 @@ const { Content } = await recipe.render();
 
 <Layout title={recipe.data.title}>
     <main>
+        {
+            recipe.data.picture && (
+                <Image
+                    src={recipe.data.picture}
+                    alt={`${recipe.data.title} cover`}
+                />
+            )
+        }
         <CategoryList categories={categories} />
         <Content />
     </main>
