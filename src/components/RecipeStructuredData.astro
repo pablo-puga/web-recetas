@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+    recipe: CollectionEntry<'recipes'>;
+}
+
+const { recipe } = Astro.props;
+const {
+    title,
+    description,
+    cover,
+    keywords,
+    created_at,
+    updated_at,
+    prepTime,
+    cookTime,
+    totalTime,
+} = recipe.data;
+
+const publishedAt = updated_at || created_at;
+
+const schema: Record<string, any> = {
+    '@context': 'https://schema.org/',
+    '@type': 'Recipe',
+    name: title,
+    author: {
+        '@type': 'Person',
+        name: 'Pablo Puga',
+    },
+    datePublished: `${publishedAt.getFullYear()}-${publishedAt.getMonth() + 1}-${publishedAt.getDate()}`,
+};
+
+if (description) {
+    schema.description = description;
+}
+
+if (cover) {
+    schema.image = [`${import.meta.env.SITE}${cover.src}`];
+}
+
+if (keywords) {
+    schema.keywords = keywords.join(',');
+}
+
+if (prepTime && cookTime && totalTime) {
+    schema.prepTime = `PT${prepTime}M`;
+    schema.cookTime = `PT${cookTime}M`;
+    schema.totalTime = `PT${totalTime}M`;
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema, null, 2)} />

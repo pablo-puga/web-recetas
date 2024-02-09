@@ -34,7 +34,11 @@ const { page } = Astro.props;
                 <li>
                     <article>
                         <>
-                            <h1>{recipe.data.title}</h1>
+                            <h1>
+                                <a href={`/receta/${recipe.slug}`}>
+                                    {recipe.data.title}
+                                </a>
+                            </h1>
                             <time>{recipe.data.created_at}</time>
                         </>
                     </article>

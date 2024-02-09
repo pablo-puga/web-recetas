@@ -1,23 +1,24 @@
 ---
 interface Props {
     title: string;
+    description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description = 'Las Recetas de Pablo' } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="es">
     <head>
         <meta charset="UTF-8" />
-        <meta name="description" content="Astro description" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
         <meta name="robots" content="noarchive" />
         <link rel="sitemap" href="/sitemap-index.xml" />
         <meta property="og:image" content="/img/icon/icon512x512.png" />
         <link rel="icon" href="/img/icon/favicon.ico" type="image/x-icon" />
-        <title>{title}</title>
+        <slot name="head" />
     </head>
     <body class="bg-theme-white text-theme-black">
         <slot />

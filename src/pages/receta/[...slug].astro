@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 
 import CategoryList from '@components/CategoryList.astro';
+import RecipeStructuredData from '@components/RecipeStructuredData.astro';
 import Layout from '@layouts/Layout.astro';
 
 export const prerender = true;
@@ -42,11 +43,12 @@ const { Content } = await recipe.render();
 ---
 
 <Layout title={recipe.data.title}>
+    <RecipeStructuredData recipe={recipe} slot="head" />
     <main>
         {
-            recipe.data.picture && (
+            recipe.data.cover && (
                 <Image
-                    src={recipe.data.picture}
+                    src={recipe.data.cover}
                     alt={`${recipe.data.title} cover`}
                 />
             )
