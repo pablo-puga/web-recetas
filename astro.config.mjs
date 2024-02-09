@@ -9,7 +9,9 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
     site: process.env.APP_URL || 'http://localhost:4321',
     integrations: [
-        tailwind(),
+        tailwind({
+            applyBaseStyles: false,
+        }),
         react(),
         mdx(),
         sitemap({

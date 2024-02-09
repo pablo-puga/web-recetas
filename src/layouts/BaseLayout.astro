@@ -26,7 +26,13 @@ const { title, description = 'Las Recetas de Pablo' } = Astro.props;
 </html>
 
 <style is:global>
+    @import '../styles/opensans-font.css';
+
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
     * {
-        @apply box-border outline-none;
+        @apply box-border outline-none font-opensans;
     }
 </style>

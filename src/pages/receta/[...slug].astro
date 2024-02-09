@@ -6,7 +6,7 @@ import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 
 import CategoryList from '@components/CategoryList.astro';
 import RecipeStructuredData from '@components/RecipeStructuredData.astro';
-import Layout from '@layouts/Layout.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
 
 export const prerender = true;
 export const getStaticPaths = (async () => {
@@ -42,7 +42,7 @@ const { recipe, categories } = Astro.props;
 const { Content } = await recipe.render();
 ---
 
-<Layout title={recipe.data.title}>
+<BaseLayout title={recipe.data.title}>
     <RecipeStructuredData recipe={recipe} slot="head" />
     <main>
         {
@@ -56,4 +56,4 @@ const { Content } = await recipe.render();
         <CategoryList categories={categories} />
         <Content />
     </main>
-</Layout>
+</BaseLayout>

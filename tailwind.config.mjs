@@ -28,6 +28,9 @@ export default {
                 'theme-orange': withOpacityValue('255 219 164'),
                 'theme-brown': withOpacityValue('193 163 163'),
             },
+            fontFamily: {
+                opensans: ['OpenSans', 'sans-serif'],
+            },
         },
     },
     plugins: [],
