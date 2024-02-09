@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+export const RECIPES_PER_PAGE = import.meta.env.RECIPES_PER_PAGE || 10;
+export const prerender = true;
+export const getStaticPaths = (async ({ paginate }) => {
+    const recipes = await getCollection('recipes', ({ data }) => {
+        return import.meta.env.PROD ? data.published === true : true;
+    });
+
+    const categories: string[] = [];
+
+    recipes.forEach((recipe) => {
+        recipe.data.categories.forEach((c) => {
+            if (categories.includes(c)) return;
+            categories.push(c);
+        });
+    });
+
+    const paths = categories.flatMap((category) => {
+        const filteredRecipes = recipes.filter((recipe) =>
+            recipe.data.categories.includes(category),
+        );
+
+        return paginate(filteredRecipes, {
+            params: {
+                category: category.toLocaleLowerCase(),
+            },
+            pageSize: RECIPES_PER_PAGE,
+        });
+    });
+
+    console.log(paths);
+
+    return paths;
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { category } = Astro.params as { category: string };
+const { page } = Astro.props as Props;
+---
+
+<BaseLayout title={`Las Recetas de Pablo | Página ${page.currentPage}`}>
+    <h1>
+        Categoría: {category}<br />Página {page.currentPage} de {page.lastPage}
+    </h1>
+    <ul>
+        {
+            page.data.map((recipe) => (
+                <li>
+                    <article>
+                        <>
+                            <h1>
+                                <a href={`/receta/${recipe.slug}`}>
+                                    {recipe.data.title}
+                                </a>
+                            </h1>
+                            <time>{recipe.data.created_at}</time>
+                        </>
+                    </article>
+                </li>
+            ))
+        }
+    </ul>
+    {page.url.prev ? <a href={page.url.prev}>Anterior</a> : null}
+    {page.url.next ? <a href={page.url.next}>Siguiente</a> : null}
+</BaseLayout>

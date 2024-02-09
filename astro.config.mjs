@@ -26,5 +26,6 @@ export default defineConfig({
     }),
     redirects: {
         '/': '/pagina/1',
+        '/categoria/[category]': '/categoria/[category]/pagina/1',
     },
 });
