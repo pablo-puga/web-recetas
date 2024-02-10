@@ -21,7 +21,7 @@ export const getStaticPaths = (async ({ paginate }) => {
         });
     });
 
-    const paths = categories.flatMap((category) => {
+    return categories.flatMap((category) => {
         const filteredRecipes = recipes.filter((recipe) =>
             recipe.data.categories.includes(category),
         );
@@ -33,10 +33,6 @@ export const getStaticPaths = (async ({ paginate }) => {
             pageSize: RECIPES_PER_PAGE,
         });
     });
-
-    console.log(paths);
-
-    return paths;
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
