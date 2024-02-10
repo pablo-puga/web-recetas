@@ -1,10 +1,12 @@
 ---
 interface Props {
     title: string;
+    slug: string;
     description?: string;
 }
 
-const { title, description = 'Las Recetas de Pablo' } = Astro.props;
+const { title, description = 'Las Recetas de Pablo', slug } = Astro.props;
+const canonicalLink = `${import.meta.env.SITE}${slug}`;
 ---
 
 <!doctype html>
@@ -15,6 +17,7 @@ const { title, description = 'Las Recetas de Pablo' } = Astro.props;
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width" />
         <meta name="robots" content="noarchive" />
+        <link rel="canonical" href={canonicalLink} />
         <link rel="sitemap" href="/sitemap-index.xml" />
         <meta property="og:image" content="/img/icon/icon512x512.png" />
         <link rel="icon" href="/img/icon/favicon.ico" type="image/x-icon" />

@@ -42,7 +42,7 @@ const { recipe, categories } = Astro.props;
 const { Content } = await recipe.render();
 ---
 
-<BaseLayout title={recipe.data.title}>
+<BaseLayout title={recipe.data.title} slug={`/receta/${recipe.slug}`}>
     <RecipeStructuredData recipe={recipe} slot="head" />
     <main>
         {

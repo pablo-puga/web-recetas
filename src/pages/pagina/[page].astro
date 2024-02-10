@@ -24,7 +24,10 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { page } = Astro.props;
 ---
 
-<BaseLayout title={`Las Recetas de Pablo | Página ${page.currentPage}`}>
+<BaseLayout
+    title={`Las Recetas de Pablo | Página ${page.currentPage}`}
+    slug={`/pagina/${page.currentPage}`}
+>
     <h1>
         Página {page.currentPage} de {page.lastPage}
     </h1>

@@ -8,6 +8,7 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
     site: process.env.APP_URL || 'http://localhost:4321',
+    trailingSlash: 'never',
     integrations: [
         tailwind({
             applyBaseStyles: false,

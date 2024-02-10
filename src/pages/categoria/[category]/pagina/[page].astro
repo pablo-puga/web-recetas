@@ -41,7 +41,10 @@ const { category } = Astro.params as { category: string };
 const { page } = Astro.props as Props;
 ---
 
-<BaseLayout title={`Las Recetas de Pablo | Página ${page.currentPage}`}>
+<BaseLayout
+    title={`Categoría ${category} | Página ${page.currentPage}`}
+    slug={`/categoria/${category.toLocaleLowerCase()}/pagina/${page.currentPage}`}
+>
     <h1>
         Categoría: {category}<br />Página {page.currentPage} de {page.lastPage}
     </h1>
