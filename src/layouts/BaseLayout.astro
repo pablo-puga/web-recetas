@@ -1,11 +1,19 @@
 ---
+import clsx from 'clsx';
+
 interface Props {
     title: string;
     slug: string;
     description?: string;
+    extraClasses?: string;
 }
 
-const { title, description = 'Las Recetas de Pablo', slug } = Astro.props;
+const {
+    title,
+    description = 'Las Recetas de Pablo',
+    slug,
+    extraClasses,
+} = Astro.props;
 const canonicalLink = `${import.meta.env.SITE}${slug}`;
 ---
 
@@ -23,7 +31,7 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
         <link rel="icon" href="/img/icon/favicon.ico" type="image/x-icon" />
         <slot name="head" />
     </head>
-    <body class="bg-theme-white text-theme-black">
+    <body class={clsx('bg-theme-white text-theme-black', extraClasses)}>
         <slot />
     </body>
 </html>

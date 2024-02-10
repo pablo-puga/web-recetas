@@ -1,0 +1,23 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+if (import.meta.env.PROD) {
+    return new Response(null, { status: 404 });
+}
+---
+
+<BaseLayout
+    title="Theme Palette"
+    slug="/palette"
+    extraClasses="bg-white flex flex-col justify-center items-center h-[100vh]"
+>
+    <ul>
+        <li><div class="w-80 h-20 bg-theme-black"></div></li>
+        <li><div class="w-80 h-20 bg-theme-grey-dark"></div></li>
+        <li><div class="w-80 h-20 bg-theme-grey-light"></div></li>
+        <li><div class="w-80 h-20 bg-theme-white"></div></li>
+        <li><div class="w-80 h-20 bg-theme-red"></div></li>
+        <li><div class="w-80 h-20 bg-theme-coral"></div></li>
+        <li><div class="w-80 h-20 bg-theme-yellow"></div></li>
+        <li><div class="w-80 h-20 bg-theme-green"></div></li>
+    </ul>
+</BaseLayout>

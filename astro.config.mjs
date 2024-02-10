@@ -18,7 +18,11 @@ export default defineConfig({
         sitemap({
             lastmod: new Date().new,
             filter: (page) =>
-                !page.includes('/pagina') && !page.includes('search'),
+                !page.includes('/pagina') &&
+                !page.includes('search') &&
+                !page.includes('palette') &&
+                !page.includes('404') &&
+                !page.includes('500'),
             customPages: [`${process.env.APP_URL || 'http://localhost:4321'}`],
         }),
     ],
