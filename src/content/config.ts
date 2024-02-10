@@ -10,11 +10,14 @@ const recipesCollection = defineCollection({
             published: z.boolean(),
             description: z.string().optional(),
             cover: image().optional(),
+            recipeYield: z
+                .object({ persons: z.number(), units: z.string().optional() })
+                .optional(),
             prepTime: z.number().optional(),
             cookTime: z.number().optional(),
             totalTime: z.number().optional(),
-            created_at: z.date(),
-            updated_at: z.date().optional(),
+            createdAt: z.date(),
+            updatedAt: z.date().optional(),
         }),
 });
 

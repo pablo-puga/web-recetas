@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+
+import Times from './Times.astro';
+
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    recipe: CollectionEntry<'recipes'>;
+}
+
+const { recipe } = Astro.props;
+const {
+    title,
+    categories,
+    cover,
+    recipeYield,
+    prepTime,
+    cookTime,
+    createdAt,
+    updatedAt,
+} = recipe.data;
+const { Content } = await recipe.render();
+---
+
+<article>
+    {cover && <Image src={cover} alt={`Imagen de cabecera de ${title}`} />}
+    {prepTime && cookTime && <Times prepTime={prepTime} cookTime={cookTime} />}
+    <Content />
+</article>

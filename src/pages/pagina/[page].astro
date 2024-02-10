@@ -13,7 +13,7 @@ export const getStaticPaths = (async ({ paginate }) => {
     });
 
     recipes.sort(
-        (a, b) => b.data.created_at.getTime() - a.data.created_at.getTime(),
+        (a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime(),
     );
 
     return paginate(recipes, { pageSize: RECIPES_PER_PAGE });
@@ -42,7 +42,7 @@ const { page } = Astro.props;
                                     {recipe.data.title}
                                 </a>
                             </h1>
-                            <time>{recipe.data.created_at}</time>
+                            <time>{recipe.data.createdAt}</time>
                         </>
                     </article>
                 </li>

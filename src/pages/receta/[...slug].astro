@@ -1,10 +1,10 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 
 import CategoryList from '@components/CategoryList.astro';
+import Recipe from '@components/Recipe.astro';
 import RecipeStructuredData from '@components/RecipeStructuredData.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 
@@ -39,21 +39,12 @@ export const getStaticPaths = (async () => {
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { recipe, categories } = Astro.props;
-const { Content } = await recipe.render();
 ---
 
 <BaseLayout title={recipe.data.title} slug={`/receta/${recipe.slug}`}>
     <RecipeStructuredData recipe={recipe} slot="head" />
     <main>
-        {
-            recipe.data.cover && (
-                <Image
-                    src={recipe.data.cover}
-                    alt={`${recipe.data.title} cover`}
-                />
-            )
-        }
         <CategoryList categories={categories} />
-        <Content />
+        <Recipe recipe={recipe} />
     </main>
 </BaseLayout>

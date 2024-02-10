@@ -10,14 +10,15 @@ const {
     description,
     cover,
     keywords,
-    created_at,
-    updated_at,
+    recipeYield,
+    createdAt,
+    updatedAt,
     prepTime,
     cookTime,
     totalTime,
 } = recipe.data;
 
-const publishedAt = updated_at || created_at;
+const publishedAt = updatedAt || createdAt;
 
 const schema: Record<string, any> = {
     '@context': 'https://schema.org/',
@@ -40,6 +41,12 @@ if (cover) {
 
 if (keywords) {
     schema.keywords = keywords.join(',');
+}
+
+if (recipeYield) {
+    if (recipeYield.units) {
+        schema.recipeYield = [`${recipeYield.persons}`, recipeYield.units];
+    } else schema.recipeYield = recipeYield.persons;
 }
 
 if (prepTime && cookTime && totalTime) {
