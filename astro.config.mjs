@@ -16,7 +16,8 @@ export default defineConfig({
         mdx(),
         sitemap({
             lastmod: new Date().new,
-            filter: (page) => !page.includes('/pagina'),
+            filter: (page) =>
+                !page.includes('/pagina') && !page.includes('search'),
             customPages: [`${process.env.APP_URL || 'http://localhost:4321'}`],
         }),
     ],
