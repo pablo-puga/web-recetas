@@ -1,9 +1,12 @@
 ---
 import { Image } from 'astro:assets';
 
+import RecipeYield from './RecipeYield.astro';
 import Times from './Times.astro';
 
 import type { CollectionEntry } from 'astro:content';
+
+import '../styles/recipe-content.css';
 
 interface Props {
     recipe: CollectionEntry<'recipes'>;
@@ -20,11 +23,18 @@ const {
     createdAt,
     updatedAt,
 } = recipe.data;
-const { Content } = await recipe.render();
+const { Content, headings } = await recipe.render();
+const hasTimes = prepTime && cookTime;
+const hasMeta = recipeYield || hasTimes;
 ---
 
-<article>
+<article class="max-w-screen-lg">
     {cover && <Image src={cover} alt={`Imagen de cabecera de ${title}`} />}
-    {prepTime && cookTime && <Times prepTime={prepTime} cookTime={cookTime} />}
-    <Content />
+    <section class="flex flex-row flex-wrap justify-between mt-2 px-2">
+        {recipeYield && <RecipeYield {...recipeYield} />}
+        {hasTimes && <Times prepTime={prepTime} cookTime={cookTime} />}
+    </section>
+    <section class="recipe-content px-2 mt-6">
+        <Content />
+    </section>
 </article>

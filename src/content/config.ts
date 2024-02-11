@@ -11,7 +11,7 @@ const recipesCollection = defineCollection({
             description: z.string().optional(),
             cover: image().optional(),
             recipeYield: z
-                .object({ persons: z.number(), units: z.string().optional() })
+                .object({ portions: z.number(), units: z.string().optional() })
                 .optional(),
             prepTime: z.number().optional(),
             cookTime: z.number().optional(),

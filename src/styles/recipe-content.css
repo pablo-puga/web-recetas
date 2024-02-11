@@ -1,0 +1,17 @@
+.recipe-content {
+    h1 {
+        @apply text-5xl font-bold mt-3 mb-2 text-theme-red;
+    }
+
+    h2 {
+        @apply text-3xl font-bold;
+    }
+
+    .ingredients:not(:last-child) {
+        @apply border-r border-r-theme-coral/80 mr-5 pr-5;
+    }
+
+    .ingredients h1 {
+        @apply text-xl font-medium text-theme-black;
+    }
+}

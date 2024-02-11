@@ -45,8 +45,8 @@ if (keywords) {
 
 if (recipeYield) {
     if (recipeYield.units) {
-        schema.recipeYield = [`${recipeYield.persons}`, recipeYield.units];
-    } else schema.recipeYield = recipeYield.persons;
+        schema.recipeYield = [`${recipeYield.portions}`, recipeYield.units];
+    } else schema.recipeYield = recipeYield.portions;
 }
 
 if (prepTime && cookTime && totalTime) {

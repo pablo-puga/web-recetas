@@ -1,0 +1,21 @@
+---
+import { GiForkKnifeSpoon } from 'react-icons/gi';
+
+interface Props {
+    portions: number;
+    units?: string;
+}
+
+const { portions, units } = Astro.props;
+---
+
+<article class="flex flex-col">
+    <h1 class="text-xl font-semibold">
+        {portions > 1 ? 'Raciones' : 'Ración'}
+    </h1>
+    <span class="flex flex-row items-center gap-2">
+        <GiForkKnifeSpoon className="text-theme-red" />
+        {portions}{' '}
+        {units && `(${units})`}
+    </span>
+</article>
