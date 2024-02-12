@@ -2,19 +2,24 @@
 import CategoryBadge from './CategoryBadge.astro';
 
 interface Props {
-    categories: string[];
+    categories: { name: string; count: number }[];
+    highlightedCategories?: string[];
 }
 
-const { categories } = Astro.props;
+const { categories, highlightedCategories = [] } = Astro.props;
 ---
 
 <nav>
-    <h1>Categorías</h1>
-    <ul class="flex flex-col flex-wrap">
+    <h1 class="text-xl font-medium">Categorías</h1>
+    <ul class="flex flex-row flex-wrap gap-2 mt-2">
         {
-            categories.map((category) => (
+            categories.map(({ name, count }) => (
                 <li>
-                    <CategoryBadge name={category} />
+                    <CategoryBadge
+                        name={name}
+                        count={count}
+                        highlight={highlightedCategories.includes(name)}
+                    />
                 </li>
             ))
         }

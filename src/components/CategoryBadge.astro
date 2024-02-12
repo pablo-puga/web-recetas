@@ -1,11 +1,22 @@
 ---
+import clsx from 'clsx';
+
 interface Props {
     name: string;
+    count: number;
+    highlight?: boolean;
 }
 
-const { name } = Astro.props;
+const { name, count, highlight = false } = Astro.props;
 ---
 
-<a href={`/categoria/${name.toLocaleLowerCase()}`}>
-    {name}
+<a
+    href={`/categoria/${name.toLocaleLowerCase()}`}
+    class={clsx(
+        'border border-theme-coral rounded-full',
+        'px-2 text-theme-coral text-sm',
+        highlight && 'font-bold border-2',
+    )}
+>
+    {name} - {count}
 </a>

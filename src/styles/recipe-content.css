@@ -3,15 +3,67 @@
         @apply text-5xl font-bold mt-3 mb-2 text-theme-red;
     }
 
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply text-theme-coral;
+    }
+
     h2 {
-        @apply text-3xl font-bold;
+        @apply text-3xl font-bold mt-2 mb-1;
     }
 
-    .ingredients:not(:last-child) {
-        @apply border-r border-r-theme-coral/80 mr-5 pr-5;
+    h3 {
+        @apply text-2xl font-bold mt-2 mb-1;
     }
 
-    .ingredients h1 {
-        @apply text-xl font-medium text-theme-black;
+    h4 {
+        @apply text-xl font-medium mt-2 mb-1;
+    }
+
+    h5 {
+        @apply text-lg font-medium mt-2 mb-1;
+    }
+
+    h6 {
+        @apply text-base font-medium mt-2 mb-1;
+    }
+
+    p {
+        @apply mt-1 mb-2 leading-relaxed;
+    }
+
+    ul,
+    ol {
+        @apply flex flex-col gap-2 pl-5;
+    }
+
+    ul {
+        @apply list-disc;
+    }
+
+    ol {
+        @apply list-decimal;
+    }
+
+    .ingredients-block {
+        .ingredients:not(:last-child) {
+            @apply border-r border-r-theme-coral/80 mr-5 pr-5;
+        }
+    }
+
+    .ingredients {
+        h1 {
+            @apply text-xl font-medium text-theme-black;
+        }
+
+        ul {
+            @apply list-none pl-0;
+            li {
+                @apply flex flex-row items-center gap-2;
+            }
+        }
     }
 }

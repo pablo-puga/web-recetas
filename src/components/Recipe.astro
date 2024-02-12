@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import clsx from 'clsx';
 
 import RecipeYield from './RecipeYield.astro';
 import Times from './Times.astro';
@@ -10,31 +11,21 @@ import '../styles/recipe-content.css';
 
 interface Props {
     recipe: CollectionEntry<'recipes'>;
+    className?: string;
 }
 
-const { recipe } = Astro.props;
-const {
-    title,
-    categories,
-    cover,
-    recipeYield,
-    prepTime,
-    cookTime,
-    createdAt,
-    updatedAt,
-} = recipe.data;
-const { Content, headings } = await recipe.render();
+const { recipe, className } = Astro.props;
+const { title, cover, recipeYield, prepTime, cookTime } = recipe.data;
 const hasTimes = prepTime && cookTime;
-const hasMeta = recipeYield || hasTimes;
 ---
 
-<article class="max-w-screen-lg">
+<article class={clsx('px-2', className)}>
     {cover && <Image src={cover} alt={`Imagen de cabecera de ${title}`} />}
-    <section class="flex flex-row flex-wrap justify-between mt-2 px-2">
+    <section class="flex flex-row flex-wrap justify-between mt-2">
         {recipeYield && <RecipeYield {...recipeYield} />}
         {hasTimes && <Times prepTime={prepTime} cookTime={cookTime} />}
     </section>
-    <section class="recipe-content px-2 mt-6">
-        <Content />
+    <section class="recipe-content mt-10">
+        <slot />
     </section>
 </article>

@@ -2,7 +2,7 @@
 import { GoSquareFill } from 'react-icons/go';
 
 interface Props {
-    title: string;
+    title?: string;
     items: string[];
 }
 
@@ -10,11 +10,11 @@ const { title, items } = Astro.props;
 ---
 
 <article class="ingredients">
-    <h1>{title}</h1>
-    <ul class="flex flex-col gap-2 mt-2">
+    {title && <h1>{title}</h1>}
+    <ul class="mt-2">
         {
             items.map((ingredient) => (
-                <li class="flex flex-row items-center gap-2">
+                <li>
                     <GoSquareFill className="text-theme-grey-light" />{' '}
                     {ingredient}
                 </li>
