@@ -1,0 +1,17 @@
+@media (max-width: theme('screens.lg')) {
+    .recipe-info {
+        @apply px-4;
+    }
+
+    .recipe-info[data-open='true'] {
+        transform: translateX(-98%);
+    }
+
+    .recipe-info button {
+        transform: translateX(-47px);
+    }
+
+    .touch .recipe-info button {
+        transform: translateX(-43px);
+    }
+}

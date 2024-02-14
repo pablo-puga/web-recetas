@@ -33,11 +33,19 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
         <link rel="icon" href="/img/icon/favicon.ico" type="image/x-icon" />
         <slot name="head" />
     </head>
-    <body class={clsx('bg-theme-white text-theme-black', extraClasses)}>
+    <body
+        class={clsx('bg-theme-grey-100/50 text-theme-grey-900', extraClasses)}
+    >
         <slot />
         <Footer />
     </body>
 </html>
+
+<script>
+    if ('ontouchstart' in document.documentElement) {
+        document.querySelector('body')?.classList.add('touch');
+    }
+</script>
 
 <style is:global>
     @import '../styles/opensans-font.css';
@@ -48,5 +56,18 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
 
     * {
         @apply box-border outline-none font-opensans;
+    }
+
+    svg path {
+        color: currentColor;
+        stroke: currentColor;
+    }
+
+    @media (max-width: 1024px) {
+        .modal-opened {
+            height: 100vh;
+            overflow-y: hidden;
+            padding-right: 15px;
+        }
     }
 </style>

@@ -13,9 +13,10 @@ const { name, count, highlight = false } = Astro.props;
 <a
     href={`/categoria/${name.toLocaleLowerCase()}`}
     class={clsx(
-        'border border-theme-coral rounded-full',
-        'px-2 text-theme-coral text-sm',
-        highlight && 'font-bold border-2',
+        'border border-theme-red-400 rounded-full',
+        'px-2 text-theme-red-400 text-sm',
+        highlight &&
+            'font-bold border-2 text-theme-red-500 border-theme-red-500',
     )}
 >
     {name} - {count}

@@ -1,20 +1,22 @@
 ---
+import clsx from 'clsx';
 import { GiForkKnifeSpoon } from 'react-icons/gi';
 
 interface Props {
     portions: number;
     units?: string;
+    className?: string;
 }
 
-const { portions, units } = Astro.props;
+const { portions, units, className } = Astro.props;
 ---
 
-<article class="flex flex-col">
+<article class={clsx('flex flex-col', className)}>
     <h1 class="text-xl font-semibold">
         {portions > 1 ? 'Raciones' : 'Ración'}
     </h1>
     <span class="flex flex-row items-center gap-2">
-        <GiForkKnifeSpoon className="text-theme-red" />
+        <GiForkKnifeSpoon className="icon text-theme-red-500" />
         {portions}{' '}
         {units && `(${units})`}
     </span>

@@ -1,0 +1,33 @@
+.table-of-contents {
+    li {
+        @apply font-medium text-theme-red-400;
+    }
+
+    li[data-level='1'] {
+        @apply font-semibold;
+    }
+
+    li[data-level='2'] {
+        @apply pl-2;
+    }
+
+    li[data-level='3'] {
+        @apply pl-4;
+    }
+
+    li[data-level='4'] {
+        @apply pl-6;
+    }
+
+    li[data-level='5'] {
+        @apply pl-8;
+    }
+
+    li[data-level='6'] {
+        @apply pl-10;
+    }
+
+    li[data-current='true'] {
+        @apply text-theme-red-700 underline;
+    }
+}

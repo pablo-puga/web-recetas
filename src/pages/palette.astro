@@ -3,21 +3,197 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 if (import.meta.env.PROD) {
     return new Response(null, { status: 404 });
 }
+
+const colors = {
+    primary: {
+        100: 'hsl(1, 57%, 90%)',
+        200: 'hsl(1, 57%, 80%)',
+        300: 'hsl(1, 57%, 70%)',
+        400: 'hsl(1, 57%, 60%)',
+        500: 'hsl(1, 57%, 50%)',
+        600: 'hsl(1, 57%, 40%)',
+        700: 'hsl(1, 57%, 30%)',
+        800: 'hsl(1, 57%, 20%)',
+        900: 'hsl(1, 57%, 15%)',
+    },
+    secondary: {
+        100: 'hsl(0, 0%, 97%)',
+        200: 'hsl(0, 0%, 84%)',
+        300: 'hsl(0, 0%, 76%)',
+        400: 'hsl(0, 0%, 68%)',
+        500: 'hsl(0, 0%, 60%)',
+        600: 'hsl(0, 0%, 50%)',
+        700: 'hsl(0, 0%, 40%)',
+        800: 'hsl(0, 0%, 30%)',
+        900: 'hsl(0, 0%, 20%)',
+    },
+    accents: {
+        Teal: {
+            100: 'hsl(162, 62%, 90%)',
+            200: 'hsl(162, 62%, 80%)',
+            300: 'hsl(162, 62%, 70%)',
+            400: 'hsl(162, 62%, 60%)',
+            500: 'hsl(162, 62%, 50%)',
+            600: 'hsl(162, 62%, 40%)',
+            700: 'hsl(162, 62%, 30%)',
+            800: 'hsl(162, 62%, 20%)',
+            900: 'hsl(162, 62%, 10%)',
+        },
+        Yellow: {
+            100: 'hsl(52, 94%, 90%)',
+            200: 'hsl(52, 94%, 80%)',
+            300: 'hsl(52, 94%, 70%)',
+            400: 'hsl(52, 94%, 60%)',
+            500: 'hsl(52, 94%, 50%)',
+            600: 'hsl(52, 94%, 40%)',
+            700: 'hsl(52, 94%, 30%)',
+            800: 'hsl(52, 94%, 20%)',
+            900: 'hsl(52, 94%, 10%)',
+        },
+        Blue: {
+            100: 'hsl(210, 100%, 90%)',
+            200: 'hsl(210, 100%, 80%)',
+            300: 'hsl(210, 100%, 70%)',
+            400: 'hsl(210, 100%, 60%)',
+            500: 'hsl(210, 100%, 50%)',
+            600: 'hsl(210, 100%, 40%)',
+            700: 'hsl(210, 100%, 30%)',
+            800: 'hsl(210, 100%, 20%)',
+            900: 'hsl(210, 100%, 10%)',
+        },
+    },
+} as const;
 ---
 
 <BaseLayout
     title="Theme Palette"
     slug="/palette"
-    extraClasses="bg-white flex flex-col justify-center items-center h-[100vh]"
+    extraClasses="bg-white flex flex-col justify-center items-center gap-8 h-[100vh] w-[700px] mx-auto"
 >
-    <ul>
-        <li><div class="w-80 h-20 bg-theme-black"></div></li>
-        <li><div class="w-80 h-20 bg-theme-grey-dark"></div></li>
-        <li><div class="w-80 h-20 bg-theme-grey-light"></div></li>
-        <li><div class="w-80 h-20 bg-theme-white"></div></li>
-        <li><div class="w-80 h-20 bg-theme-red"></div></li>
-        <li><div class="w-80 h-20 bg-theme-coral"></div></li>
-        <li><div class="w-80 h-20 bg-theme-yellow"></div></li>
-        <li><div class="w-80 h-20 bg-theme-green"></div></li>
-    </ul>
+    <section class="flex flex-row justify-between w-full">
+        <div class="w-[200px] flex flex-row items-center">
+            <span class="font-semibold">Primary</span>
+        </div>
+        <div class="flex flex-row gap-3">
+            {
+                Object.keys(colors.primary).map((scale) => (
+                    <div
+                        class="w-10 h-10 rounded shadow-inner"
+                        style={{
+                            backgroundColor:
+                                colors.primary[
+                                    scale as unknown as keyof typeof colors.secondary
+                                ],
+                        }}
+                        data-scale={scale}
+                    />
+                ))
+            }
+        </div>
+    </section>
+    <hr class="border-t border-gray-200 w-full" />
+    <section class="flex flex-row justify-between w-full">
+        <div class="w-[200px] flex flex-row items-center">
+            <span class="font-semibold">Secondary</span>
+        </div>
+        <div class="flex flex-row gap-3">
+            {
+                Object.keys(colors.secondary).map((scale) => (
+                    <div
+                        class="w-10 h-10 rounded shadow-inner"
+                        style={{
+                            backgroundColor:
+                                colors.secondary[
+                                    scale as unknown as keyof typeof colors.secondary
+                                ],
+                        }}
+                        data-scale={scale}
+                    />
+                ))
+            }
+        </div>
+    </section>
+    <hr class="border-t border-gray-200 w-full" />
+    <section class="flex flex-row justify-between w-full">
+        <div class="w-[160px] flex flex-row items-start">
+            <span class="pt-2 font-semibold">Accents</span>
+        </div>
+        <div class="flex flex-col grow gap-6">
+            <section class="flex flex-row justify-between w-full">
+                <div class="w-[50px] flex flex-row items-center">
+                    <span class="font-medium">Teal</span>
+                </div>
+                <div class="flex flex-row gap-3">
+                    {
+                        Object.keys(colors.accents.Teal).map((scale) => (
+                            <div
+                                class="w-10 h-10 rounded shadow-inner"
+                                style={{
+                                    backgroundColor:
+                                        colors.accents.Teal[
+                                            scale as unknown as keyof typeof colors.accents.Teal
+                                        ],
+                                }}
+                                data-scale={scale}
+                            />
+                        ))
+                    }
+                </div>
+            </section>
+            <section class="flex flex-row justify-between w-full">
+                <div class="w-[50px] flex flex-row items-center">
+                    <span class="font-medium">Yellow</span>
+                </div>
+                <div class="flex flex-row gap-3">
+                    {
+                        Object.keys(colors.accents.Yellow).map((scale) => (
+                            <div
+                                class="w-10 h-10 rounded shadow-inner"
+                                style={{
+                                    backgroundColor:
+                                        colors.accents.Yellow[
+                                            scale as unknown as keyof typeof colors.accents.Yellow
+                                        ],
+                                }}
+                                data-scale={scale}
+                            />
+                        ))
+                    }
+                </div>
+            </section>
+            <section class="flex flex-row justify-between w-full">
+                <div class="w-[50px] flex flex-row items-center">
+                    <span class="font-medium">Blue</span>
+                </div>
+                <div class="flex flex-row gap-3">
+                    {
+                        Object.keys(colors.accents.Blue).map((scale) => (
+                            <div
+                                class="w-10 h-10 rounded shadow-inner"
+                                style={{
+                                    backgroundColor:
+                                        colors.accents.Blue[
+                                            scale as unknown as keyof typeof colors.accents.Blue
+                                        ],
+                                }}
+                                data-scale={scale}
+                            />
+                        ))
+                    }
+                </div>
+            </section>
+        </div>
+    </section>
 </BaseLayout>
+
+<style>
+    div[data-scale] {
+        @apply relative;
+    }
+
+    div[data-scale]::after {
+        content: attr(data-scale);
+        transform: translateX(-50%);
+        @apply block absolute text-xs font-semibold -bottom-5 left-[50%];
+    }
+</style>
