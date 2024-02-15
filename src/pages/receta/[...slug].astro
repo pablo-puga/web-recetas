@@ -56,7 +56,9 @@ const { Content, headings } = await recipe.render();
 
 <BaseLayout title={recipe.data.title} slug={`/receta/${recipe.slug}`}>
     <RecipeStructuredData recipe={recipe} slot="head" />
-    <main class="flex flex-row mb-20 lg:gap-10 justify-center w-full">
+    <main
+        class="flex flex-row mb-20 md:px-2 xl:px-0 lg:gap-10 justify-center w-full"
+    >
         <Recipe
             recipe={recipe}
             className="lg:max-w-[900px]"

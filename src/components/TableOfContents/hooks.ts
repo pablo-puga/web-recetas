@@ -11,12 +11,6 @@ export const useHeadersObserver = (wrapperSelector: string) => {
 
     useEffect(() => {
         const handleObserver: IntersectionObserverCallback = (entries) => {
-            console.log(
-                entries.map((e) => ({
-                    isIntersecting: e.isIntersecting,
-                    target: e.target,
-                })),
-            );
             entries.forEach((entry) => {
                 if (entry?.isIntersecting) {
                     setActiveId(entry.target.id);

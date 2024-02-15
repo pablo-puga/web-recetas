@@ -1,17 +1,30 @@
-@media (max-width: theme('screens.lg')) {
+.recipe-info {
+    @apply px-4;
+    transform: translateX(100%);
+    max-width: calc(100% - 50px);
+}
+
+.recipe-info[data-open='true'] {
+    transform: translateX(0);
+}
+
+.recipe-info button {
+    transform: translate(-30px, -50%);
+}
+
+.touch .recipe-info button {
+    transform: translateX(-43px);
+}
+
+@screen sm {
     .recipe-info {
-        @apply px-4;
+        max-width: 320px;
     }
+}
 
-    .recipe-info[data-open='true'] {
-        transform: translateX(-98%);
-    }
-
-    .recipe-info button {
-        transform: translateX(-47px);
-    }
-
-    .touch .recipe-info button {
-        transform: translateX(-43px);
+@screen lg {
+    .recipe-info {
+        @apply px-0 transform-none;
+        max-width: initial;
     }
 }

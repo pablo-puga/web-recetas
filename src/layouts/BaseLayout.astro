@@ -2,6 +2,7 @@
 import clsx from 'clsx';
 
 import Footer from '@components/Footer.astro';
+import TopBar from '@components/TopBar.astro';
 
 interface Props {
     title: string;
@@ -34,8 +35,12 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
         <slot name="head" />
     </head>
     <body
-        class={clsx('bg-theme-grey-100/50 text-theme-grey-900', extraClasses)}
+        class={clsx(
+            'bg-theme-grey-100/50 text-theme-grey-900 mt-14 relative md:mt-16 lg:mt-20',
+            extraClasses,
+        )}
     >
+        <TopBar />
         <slot />
         <Footer />
     </body>
@@ -63,8 +68,14 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
         stroke: currentColor;
     }
 
+    .search-opened {
+        height: 100vh;
+        overflow-y: hidden;
+        padding-right: 15px;
+    }
+
     @media (max-width: 1024px) {
-        .modal-opened {
+        .info-opened {
             height: 100vh;
             overflow-y: hidden;
             padding-right: 15px;

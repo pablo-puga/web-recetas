@@ -1,0 +1,19 @@
+---
+import { Image } from 'astro:assets';
+
+import { Search } from './Search';
+---
+
+<header
+    class="h-12 z-[55] w-full fixed top-0 flex flex-row items-center px-2 bg-theme-grey-100 shadow gap-6"
+>
+    <Image
+        src="/img/icon/icon-512x512.png"
+        alt="Logo de Las Recetas de Pablo"
+        width="512"
+        height="512"
+        class="h-8 w-auto"
+    />
+    <h1 class="text-lg font-bold grow sm:text-xl">Las Recetas de Pablo</h1>
+    <Search client:idle className="justify-self-end" />
+</header>
