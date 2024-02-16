@@ -15,7 +15,7 @@ export default {
             colors: {
                 theme: {
                     red: {
-                        100: withOpacityValue('1, 57%, 90%'),
+                        100: withOpacityValue('1, 57%, 95%'),
                         200: withOpacityValue('1, 57%, 80%'),
                         300: withOpacityValue('1, 57%, 70%'),
                         400: withOpacityValue('1, 57%, 60%'),
@@ -27,9 +27,9 @@ export default {
                     },
                     grey: {
                         100: withOpacityValue('0, 0%, 97%'),
-                        200: withOpacityValue('0, 0%, 84%'),
-                        300: withOpacityValue('0, 0%, 76%'),
-                        400: withOpacityValue('0, 0%, 68%'),
+                        200: withOpacityValue('0, 0%, 95%'),
+                        300: withOpacityValue('0, 0%, 83%'),
+                        400: withOpacityValue('0, 0%, 72%'),
                         500: withOpacityValue('0, 0%, 60%'),
                         600: withOpacityValue('0, 0%, 50%'),
                         700: withOpacityValue('0, 0%, 40%'),
@@ -37,7 +37,7 @@ export default {
                         900: withOpacityValue('0, 0%, 20%'),
                     },
                     teal: {
-                        100: withOpacityValue('162, 62%, 90%'),
+                        100: withOpacityValue('162, 62%, 95%'),
                         200: withOpacityValue('162, 62%, 80%'),
                         300: withOpacityValue('162, 62%, 70%'),
                         400: withOpacityValue('162, 62%, 60%'),
@@ -59,7 +59,7 @@ export default {
                         900: withOpacityValue('52, 94%, 10%'),
                     },
                     blue: {
-                        100: withOpacityValue('210, 100%, 90%'),
+                        100: withOpacityValue('210, 100%, 95%'),
                         200: withOpacityValue('210, 100%, 80%'),
                         300: withOpacityValue('210, 100%, 70%'),
                         400: withOpacityValue('210, 100%, 60%'),

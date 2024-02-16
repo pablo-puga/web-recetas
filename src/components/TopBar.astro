@@ -12,8 +12,12 @@ import { Search } from './Search';
         alt="Logo de Las Recetas de Pablo"
         width="512"
         height="512"
-        class="h-8 w-auto"
+        class="h-6 sm:h-8 w-auto"
     />
-    <h1 class="text-lg font-bold grow sm:text-xl">Las Recetas de Pablo</h1>
+    <h1
+        class="text-base font-medium sm:font-bold grow sm:text-xl overflow-hidden text-ellipsis whitespace-nowrap"
+    >
+        Las Recetas de Pablo
+    </h1>
     <Search client:idle className="justify-self-end" />
 </header>

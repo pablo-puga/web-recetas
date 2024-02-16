@@ -1,0 +1,106 @@
+.loader {
+    @apply block relative w-[100px] h-[100px];
+}
+.loader div {
+    @apply absolute w-[20px] h-[20px] rounded-full bg-theme-teal-600 transition-all duration-100;
+    animation: loader 1.2s linear infinite;
+}
+.loader div:nth-child(1) {
+    top: 10px;
+    left: 10px;
+    animation-delay: 0s;
+}
+.loader div:nth-child(2) {
+    top: 10px;
+    left: 40px;
+    animation-delay: -0.4s;
+}
+.loader div:nth-child(3) {
+    top: 10px;
+    left: 70px;
+    animation-delay: -0.8s;
+}
+.loader div:nth-child(4) {
+    top: 40px;
+    left: 10px;
+    animation-delay: -0.4s;
+}
+.loader div:nth-child(5) {
+    top: 40px;
+    left: 40px;
+    animation-delay: -0.8s;
+}
+.loader div:nth-child(6) {
+    top: 40px;
+    left: 70px;
+    animation-delay: -1.2s;
+}
+.loader div:nth-child(7) {
+    top: 70px;
+    left: 10px;
+    animation-delay: -0.8s;
+}
+.loader div:nth-child(8) {
+    top: 70px;
+    left: 40px;
+    animation-delay: -1.2s;
+}
+.loader div:nth-child(9) {
+    top: 70px;
+    left: 70px;
+    animation-delay: -1.6s;
+}
+@keyframes loader {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@screen md {
+    .loader {
+        @apply block relative w-[130px] h-[130px];
+    }
+    .loader div {
+        @apply w-[30px] h-[30px];
+    }
+    .loader div:nth-child(1) {
+        top: 10px;
+        left: 10px;
+    }
+    .loader div:nth-child(2) {
+        top: 10px;
+        left: 50px;
+    }
+    .loader div:nth-child(3) {
+        top: 10px;
+        left: 90px;
+    }
+    .loader div:nth-child(4) {
+        top: 50px;
+        left: 10px;
+    }
+    .loader div:nth-child(5) {
+        top: 50px;
+        left: 50px;
+    }
+    .loader div:nth-child(6) {
+        top: 50px;
+        left: 90px;
+    }
+    .loader div:nth-child(7) {
+        top: 90px;
+        left: 10px;
+    }
+    .loader div:nth-child(8) {
+        top: 90px;
+        left: 50px;
+    }
+    .loader div:nth-child(9) {
+        top: 90px;
+        left: 90px;
+    }
+}

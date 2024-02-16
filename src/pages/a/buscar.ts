@@ -16,12 +16,12 @@ const buildResponse = (status: number, data: object) =>
 export const GET: APIRoute = async ({ request, url }) => {
     const xApp = request.headers.get('x-app');
     if (!xApp || xApp !== EXPECTED_X_APP) {
-        return buildResponse(403, { error: 'Forbidden' });
+        return buildResponse(403, { error: 'Operación prohibida' });
     }
 
-    const filter = url.searchParams.get('filter')?.trim().toLocaleLowerCase();
+    const filter = url.searchParams.get('filtro')?.trim().toLocaleLowerCase();
     if (!filter || filter.length < MIN_SEARCH_LENGTH) {
-        return buildResponse(400, { error: 'Bad data' });
+        return buildResponse(400, { error: 'Información incorrecta' });
     }
 
     const filteredRecipes = await getCollection('recipes', ({ data }) => {
@@ -35,6 +35,10 @@ export const GET: APIRoute = async ({ request, url }) => {
 
         return foundCategory !== undefined;
     });
+
+    filteredRecipes.sort(
+        (a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime(),
+    );
 
     return buildResponse(200, {
         recipes: filteredRecipes.map(({ slug, data }) => ({
