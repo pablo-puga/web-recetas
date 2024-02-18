@@ -6,6 +6,7 @@ import style from './RecipeInfo.module.css';
 
 import type { MarkdownHeading } from 'astro';
 
+import { withStrictMode } from '@components/strict-mode';
 import { TableOfContents } from '@components/TableOfContents';
 
 interface Props {
@@ -14,7 +15,7 @@ interface Props {
     CategoryList?: ReactElement;
 }
 
-export const RecipeInfo = ({ headings, Dates, CategoryList }: Props) => {
+const RecipeInfo = ({ headings, Dates, CategoryList }: Props) => {
     const [isOpen, toggleIsOpen] = useReducer((state) => {
         const newState = !state;
         if (newState) {
@@ -61,3 +62,5 @@ export const RecipeInfo = ({ headings, Dates, CategoryList }: Props) => {
         </>
     );
 };
+
+export default withStrictMode(RecipeInfo);

@@ -4,11 +4,13 @@ import { IoIosSearch } from 'react-icons/io';
 
 import { SearchModal } from './SearchModal';
 
+import { withStrictMode } from '@components/strict-mode';
+
 interface Props {
     className?: string;
 }
 
-export const Search = ({ className }: Props) => {
+const Search = ({ className }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const close = () => {
@@ -38,3 +40,5 @@ export const Search = ({ className }: Props) => {
         </>
     );
 };
+
+export default withStrictMode(Search);
