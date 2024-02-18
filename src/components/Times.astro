@@ -13,21 +13,21 @@ const { prepTime, cookTime, className } = Astro.props;
 
 <ul class={clsx('flex flex-row gap-3', className)}>
     <li class="border-r-2 border-theme-red-200 pr-3">
-        <article>
-            <h1 class="text-xl font-semibold">Tiempo de preparación</h1>
+        <div>
+            <span class="text-xl font-semibold">Tiempo de preparación</span>
             <span class="flex flex-row items-center gap-2">
                 <FaRegClock className="text-theme-red-500" />
                 {prepTime} min
             </span>
-        </article>
+        </div>
     </li>
     <li>
-        <article>
-            <h1 class="text-xl font-semibold">Tiempo de cocinado</h1>
+        <div>
+            <span class="text-xl font-semibold">Tiempo de cocinado</span>
             <span class="flex flex-row items-center gap-2">
                 <FaRegClock className="text-theme-red-500" />
                 {cookTime} min
             </span>
-        </article>
+        </div>
     </li>
 </ul>

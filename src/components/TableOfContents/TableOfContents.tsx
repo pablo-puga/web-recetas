@@ -23,7 +23,7 @@ export const TableOfContents = ({
 
     return (
         <nav className={clsx('flex flex-col', styles['table-of-contents'])}>
-            <h1 className="text-xl font-medium">Tabla de contenidos</h1>
+            <h3 className="text-xl font-medium">Tabla de contenidos</h3>
             <ul className="flex flex-col gap-2 mt-2">
                 {headings.map(({ depth, slug, text }, index) => (
                     <li

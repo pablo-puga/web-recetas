@@ -4,10 +4,17 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import { defineConfig } from 'astro/config';
+import { loadEnv } from 'vite';
+
+const { APP_URL = 'http://localhost:4321' } = loadEnv(
+    process.env.NODE_ENV,
+    process.cwd(),
+    '',
+);
 
 // https://astro.build/config
 export default defineConfig({
-    site: process.env.APP_URL || 'http://localhost:4321',
+    site: APP_URL,
     trailingSlash: 'never',
     integrations: [
         tailwind({
@@ -24,7 +31,7 @@ export default defineConfig({
                 !page.includes('palette') &&
                 !page.includes('404') &&
                 !page.includes('500'),
-            customPages: [`${process.env.APP_URL || 'http://localhost:4321'}`],
+            customPages: [APP_URL],
         }),
     ],
     output: 'server',

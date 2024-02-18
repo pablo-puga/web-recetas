@@ -55,7 +55,11 @@ const { createdAt, updatedAt, categories: recipeCategories } = recipe.data;
 const { Content, headings } = await recipe.render();
 ---
 
-<BaseLayout title={recipe.data.title} slug={`/receta/${recipe.slug}`}>
+<BaseLayout
+    title={recipe.data.title}
+    slug={`/receta/${recipe.slug}`}
+    description={recipe.data.description}
+>
     <Fragment slot="head">
         <RecipeStructuredData recipe={recipe} />
         <OGData recipe={recipe} />

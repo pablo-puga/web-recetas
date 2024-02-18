@@ -10,7 +10,7 @@ const { title, items } = Astro.props;
 ---
 
 <article class="ingredients">
-    {title && <h1>{title}</h1>}
+    {title && <h3>{title}</h3>}
     <ul class="mt-2">
         {
             items.map((ingredient) => (

@@ -51,9 +51,9 @@ export const SearchModal = ({ close }: Props) => {
     } else if (recipes) {
         body = (
             <>
-                <h1 className="text-theme-teal-700 text-sm font-semibold">
+                <h2 className="text-theme-teal-700 text-sm font-semibold">
                     Resultados
-                </h1>
+                </h2>
                 <ul className="mt-2 flex flex-col gap-2">
                     {recipes.map((recipe) => (
                         <li key={recipe.slug}>

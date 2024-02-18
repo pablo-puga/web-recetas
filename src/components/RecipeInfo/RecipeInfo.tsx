@@ -52,7 +52,7 @@ const RecipeInfo = ({ headings, Dates, CategoryList }: Props) => {
                     />
                 </button>
                 <div className="relative lg:hidden"></div>
-                <h1 className="text-2xl font-semibold">Información</h1>
+                <h2 className="text-2xl font-semibold">Información</h2>
                 {Dates}
                 <hr />
                 <TableOfContents headings={headings} />

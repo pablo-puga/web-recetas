@@ -23,9 +23,9 @@ export const SearchResult = ({ recipe }: { recipe: Recipe }) => {
                     </div>
                 )}
                 <div className="grow flex flex-col gap-1">
-                    <h1 className="text-lg font-medium sm:font-semibold">
+                    <h2 className="text-lg font-medium sm:font-semibold">
                         {title}
-                    </h1>
+                    </h2>
                     <p
                         className={clsx(
                             'text-sm max-h-[60px] text-ellipsis line-clamp-2',
