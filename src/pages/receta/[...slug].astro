@@ -5,6 +5,7 @@ import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 
 import CategoryList from '@components/CategoryList.astro';
 import Dates from '@components/Dates.astro';
+import OGData from '@components/OGData.astro';
 import Recipe from '@components/Recipe.astro';
 import RecipeInfo from '@components/RecipeInfo';
 import RecipeStructuredData from '@components/RecipeStructuredData.astro';
@@ -55,7 +56,10 @@ const { Content, headings } = await recipe.render();
 ---
 
 <BaseLayout title={recipe.data.title} slug={`/receta/${recipe.slug}`}>
-    <RecipeStructuredData recipe={recipe} slot="head" />
+    <Fragment slot="head">
+        <RecipeStructuredData recipe={recipe} />
+        <OGData recipe={recipe} />
+    </Fragment>
     <main
         class="flex flex-row mb-20 md:px-2 xl:px-0 lg:gap-10 justify-center w-full"
     >

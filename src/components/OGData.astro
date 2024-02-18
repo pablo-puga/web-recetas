@@ -1,0 +1,41 @@
+---
+import { formatISO } from 'date-fns';
+
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    recipe: CollectionEntry<'recipes'>;
+}
+
+const { recipe } = Astro.props;
+const { slug } = recipe;
+const { title, description, cover, createdAt, updatedAt } = recipe.data;
+---
+
+<meta property="og:article:author" content="Pablo Puga" />
+<meta property="og:article:published_time" content={formatISO(createdAt)} />
+{
+    updatedAt && (
+        <meta
+            property="og:article:modified_time"
+            content={formatISO(updatedAt)}
+        />
+    )
+}
+<meta property="og:description" content={description} />
+{
+    cover && (
+        <>
+            <meta
+                property="og:image"
+                content={`${import.meta.env.SITE}${cover.src}`}
+            />
+            <meta property="og:image:alt" content={title} />
+        </>
+    )
+}
+<meta property="og:locale" content="es_ES" />
+<meta property="og:site_name" content="Las Recetas de Pablo" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content={title} />
+<meta property="og:url" content={`${import.meta.env.SITE}/receta/${slug}`} />
