@@ -27,7 +27,11 @@ const RecipeInfo = ({ headings, Meta, CategoryList }: Props) => {
     return (
         <>
             {isOpen && (
-                <div className="bg-theme-grey-700/50 fixed z-40 top-0 left-0 h-[100vh] w-[100vw] pointer-events-none lg:hidden lg:pointer-events-auto"></div>
+                <div
+                    className="bg-theme-grey-700/50 fixed z-40 top-0 left-0 h-[100vh] w-[100vw] lg:hidden"
+                    role="presentation"
+                    onClick={toggleIsOpen}
+                ></div>
             )}
             <div
                 data-open={isOpen}
