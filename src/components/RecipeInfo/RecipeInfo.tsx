@@ -32,14 +32,14 @@ const RecipeInfo = ({ headings, Dates, CategoryList }: Props) => {
             <div
                 data-open={isOpen}
                 className={clsx(
-                    'recipe-info fixed h-[100vh] w-full right-0 z-50 top-8 lg:top-16 lg:w-auto lg:h-auto lg:sticky transition duration-100',
+                    'recipe-info fixed h-[100vh] w-full right-0 z-50 top-8 lg:top-16 lg:w-auto lg:h-auto lg:sticky transition',
                     style['recipe-info'],
                     'flex flex-col gap-4 bg-theme-grey-100',
                 )}
             >
                 <button
                     className={clsx(
-                        'rounded-l font-bold w-8 h-16 absolute left-0 transition duration-100 top-[50%] lg:hidden',
+                        'rounded-l font-bold w-8 h-16 absolute left-0 transition top-[50%] lg:hidden',
                         isOpen
                             ? 'bg-theme-grey-100'
                             : 'bg-theme-yellow-200 shadow-sm',

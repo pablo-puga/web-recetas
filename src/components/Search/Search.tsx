@@ -27,8 +27,10 @@ const Search = ({ className }: Props) => {
         <>
             <button
                 className={clsx(
-                    'inline-flex flex-row gap-2 items-center text-2xl font-bold px-2 py-1 border border-gray-200 rounded text-theme-grey-700',
+                    'inline-flex flex-row gap-2 items-center text-2xl font-bold px-2 py-1 border border-gray-200 rounded text-theme-grey-700 transition',
                     'sm:text-base sm:font-normal sm:w-44 sm:bg-white sm:shadow-inner',
+                    'md:w-52',
+                    'lg:w-64',
                     className,
                 )}
                 onClick={open}

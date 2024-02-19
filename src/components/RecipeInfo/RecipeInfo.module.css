@@ -1,5 +1,5 @@
 .recipe-info {
-    @apply px-4;
+    @apply pl-6 pr-4 pt-5;
     transform: translateX(100%);
     max-width: calc(100% - 50px);
 }
@@ -24,7 +24,7 @@
 
 @screen lg {
     .recipe-info {
-        @apply px-0 transform-none;
+        @apply p-0 transform-none;
         max-width: initial;
     }
 }

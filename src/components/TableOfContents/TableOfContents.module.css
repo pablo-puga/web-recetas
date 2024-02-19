@@ -1,6 +1,6 @@
 .table-of-contents {
     li {
-        @apply font-medium text-theme-blue-700;
+        @apply font-medium text-theme-teal-700;
     }
 
     li[data-level='1'] {
@@ -28,6 +28,11 @@
     }
 
     li[data-current='true'] {
-        @apply text-theme-red-500 underline;
+        @apply text-theme-red-500 relative;
+
+        &::before {
+            content: '>';
+            @apply block absolute -translate-x-[150%] font-bold;
+        }
     }
 }

@@ -49,8 +49,18 @@
     }
 
     .ingredients-block {
-        .ingredients:not(:last-child) {
-            @apply border-r border-r-theme-red-400 mr-5 pr-5;
+        @apply flex flex-col gap-3 sm:flex-row sm:flex-wrap mt-3;
+
+        @screen sm {
+            @apply mt-6;
+
+            .ingredients {
+                width: calc(100% / 2 - 30px);
+            }
+
+            .ingredients:nth-child(odd):not(:last-child) {
+                @apply border-r border-r-theme-grey-300 border-dashed mr-5 pr-5;
+            }
         }
     }
 

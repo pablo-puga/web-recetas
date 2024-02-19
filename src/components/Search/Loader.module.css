@@ -2,7 +2,7 @@
     @apply block relative w-[100px] h-[100px];
 }
 .loader div {
-    @apply absolute w-[20px] h-[20px] rounded-full bg-theme-teal-600 transition-all duration-100;
+    @apply absolute w-[20px] h-[20px] rounded-full bg-theme-teal-600 transition-all;
     animation: loader 1.2s linear infinite;
 }
 .loader div:nth-child(1) {
