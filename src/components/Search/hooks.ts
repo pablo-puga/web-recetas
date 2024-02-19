@@ -13,6 +13,7 @@ export const useSearchForm = () => {
         reset,
         formState: { isLoading, errors },
         getValues,
+        setFocus,
     } = useForm<SearchInputs>();
 
     return {
@@ -21,6 +22,7 @@ export const useSearchForm = () => {
         reset,
         isLoading,
         errors,
+        focusQuery: () => setFocus('query'),
         getQuery: () => getValues('query'),
     };
 };
@@ -83,6 +85,10 @@ export const useSearch = () => {
         shouldRetryOnError: false,
         dedupingInterval: 2000,
     });
+
+    if (error) {
+        console.error(error);
+    }
 
     const errorMsg = (() => {
         if (!error) return undefined;

@@ -24,29 +24,35 @@ export const GET: APIRoute = async ({ request, url }) => {
         return buildResponse(400, { error: 'Información incorrecta' });
     }
 
-    const filteredRecipes = await getCollection('recipes', ({ data }) => {
-        if (import.meta.env.PROD && data.published === false) return false;
-        if (data.title.toLocaleLowerCase().includes(filter)) return true;
-        if (data.description?.toLocaleLowerCase().includes(filter)) return true;
+    try {
+        const filteredRecipes = await getCollection('recipes', ({ data }) => {
+            if (import.meta.env.PROD && data.published === false) return false;
+            if (data.title.toLocaleLowerCase().includes(filter)) return true;
+            if (data.description?.toLocaleLowerCase().includes(filter))
+                return true;
 
-        const foundCategory = data.categories.find((c) =>
-            c.toLocaleLowerCase().includes(filter),
+            const foundCategory = data.categories.find((c) =>
+                c.toLocaleLowerCase().includes(filter),
+            );
+
+            return foundCategory !== undefined;
+        });
+
+        filteredRecipes.sort(
+            (a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime(),
         );
 
-        return foundCategory !== undefined;
-    });
-
-    filteredRecipes.sort(
-        (a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime(),
-    );
-
-    return buildResponse(200, {
-        recipes: filteredRecipes.map(({ slug, data }) => ({
-            slug,
-            title: data.title,
-            description: data.description,
-            cover: data.cover?.src,
-            categories: data.categories,
-        })),
-    });
+        return buildResponse(200, {
+            recipes: filteredRecipes.map(({ slug, data }) => ({
+                slug,
+                title: data.title,
+                description: data.description,
+                cover: data.cover?.src,
+                categories: data.categories,
+            })),
+        });
+    } catch (e) {
+        console.error(e);
+        return buildResponse(500, { error: 'Error inesperado' });
+    }
 };

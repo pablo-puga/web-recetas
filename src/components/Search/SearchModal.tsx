@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import { useEffect, type ReactNode } from 'react';
 import { IoIosSearch } from 'react-icons/io';
-import { IoClose } from 'react-icons/io5';
+import { IoClose, IoInformationCircleOutline } from 'react-icons/io5';
+import { MdErrorOutline } from 'react-icons/md';
 
 import { useSearch, useSearchForm } from './hooks';
 import { Loader } from './Loader';
@@ -12,7 +13,8 @@ interface Props {
 }
 
 export const SearchModal = ({ close }: Props) => {
-    const { register, errors, handleSubmit, reset, getQuery } = useSearchForm();
+    const { register, errors, handleSubmit, reset, getQuery, focusQuery } =
+        useSearchForm();
     const { setQuery, loading, error, recipes } = useSearch();
 
     useEffect(() => {
@@ -31,13 +33,19 @@ export const SearchModal = ({ close }: Props) => {
         return () => document.removeEventListener('keydown', keyPressHandler);
     }, [close]);
 
+    useEffect(focusQuery, [focusQuery]);
+
     const handleQueryChange = handleSubmit((data) => {
         setQuery(data.query);
     });
 
     let body: ReactNode;
     if (errors.query?.type === 'minLength') {
-        body = <span>Introduce al menos 3 letras para buscar más recetas</span>;
+        body = (
+            <span className="inline-block text-sm w-full text-center">
+                Introduce al menos 3 letras para buscar más recetas
+            </span>
+        );
     } else if (loading) {
         body = (
             <div className="flex flex-col items-center mt-24 sm:gap-5 md:mt-0 md:gap-8 md:min-h-[300px] md:justify-center lg:gap-10 ">
@@ -45,9 +53,29 @@ export const SearchModal = ({ close }: Props) => {
             </div>
         );
     } else if (error) {
-        body = <span>Error: {error}</span>;
+        body = (
+            <>
+                <span className="w-full flex flex-row items-center justify-center gap-2">
+                    <MdErrorOutline className="text-2xl text-theme-red-600" />
+                    Ha habido un problema al hacer la búsqueda.
+                </span>
+                <details className="mt-4 text-sm">
+                    <summary className="text-center cursor-pointer">
+                        Ver detalles
+                    </summary>
+                    <p className="mt-2 text-base bg-white rounded p-3 shadow-sm">
+                        {error}
+                    </p>
+                </details>
+            </>
+        );
     } else if (recipes && recipes.length === 0) {
-        body = <span>No se han encontrado resultados para la búsqueda</span>;
+        body = (
+            <span className="w-full flex flex-row items-center justify-center gap-2">
+                <IoInformationCircleOutline className="text-2xl text-theme-blue-500" />
+                No se han encontrado resultados para la búsqueda
+            </span>
+        );
     } else if (recipes) {
         body = (
             <>
@@ -64,7 +92,11 @@ export const SearchModal = ({ close }: Props) => {
             </>
         );
     } else {
-        body = <span>Por favor, introduce algún término de búsqueda</span>;
+        body = (
+            <span className="inline-block text-sm w-full text-center">
+                Por favor, introduce algún término de búsqueda
+            </span>
+        );
     }
 
     return (

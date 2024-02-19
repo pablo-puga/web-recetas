@@ -9,7 +9,7 @@ export const SearchResult = ({ recipe }: { recipe: Recipe }) => {
         <a href={`/receta/${slug}`}>
             <article
                 className={clsx(
-                    'bg-white hover:bg-theme-teal-200 shadow-sm rounded flex flex-row p-2 max-h-[120px]',
+                    'bg-white hover:bg-theme-teal-200 shadow-sm rounded flex flex-row p-2 max-h-[125px]',
                     'sm:gap-2 sm:p-3',
                     cover && 'sm:max-h-[138px] sm:gap-4',
                 )}
@@ -34,7 +34,7 @@ export const SearchResult = ({ recipe }: { recipe: Recipe }) => {
                     >
                         {description}
                     </p>
-                    <ul className="flex flex-row gap-2 text-xs grow items-end">
+                    <ul className="flex flex-row gap-2 text-xs grow items-end mt-2">
                         {categories.map((c) => (
                             <li
                                 key={c}
