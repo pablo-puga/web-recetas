@@ -2,9 +2,6 @@
 import { Image } from 'astro:assets';
 import clsx from 'clsx';
 
-import RecipeYield from './RecipeYield.astro';
-import Times from './Times.astro';
-
 import type { CollectionEntry } from 'astro:content';
 import type { CSSProperties } from 'react';
 import '../styles/recipe-content.css';
@@ -16,29 +13,20 @@ interface Props {
 }
 
 const { recipe, className, style } = Astro.props;
-const { title, cover, recipeYield, prepTime, cookTime } = recipe.data;
-const hasTimes = prepTime && cookTime;
+const { title, cover } = recipe.data;
 ---
 
 <article class={clsx('px-2', className)} style={{ ...style }}>
-    {cover && <Image src={cover} alt={`Imagen de cabecera de ${title}`} />}
-    <section class="flex flex-row flex-wrap justify-between mt-2">
-        {
-            recipeYield && (
-                <RecipeYield {...recipeYield} className="order-2 md:order-1" />
-            )
-        }
-        {
-            hasTimes && (
-                <Times
-                    prepTime={prepTime}
-                    cookTime={cookTime}
-                    className="order-1 md:order-2"
-                />
-            )
-        }
-    </section>
-    <section class="recipe-content mt-10">
+    {
+        cover && (
+            <Image
+                src={cover}
+                alt={`Imagen de cabecera de ${title}`}
+                class="mb-10"
+            />
+        )
+    }
+    <section class="recipe-content first:-mt-2">
         <slot />
     </section>
 </article>

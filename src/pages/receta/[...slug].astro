@@ -4,10 +4,10 @@ import { getCollection } from 'astro:content';
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 
 import CategoryList from '@components/CategoryList.astro';
-import Dates from '@components/Dates.astro';
 import OGData from '@components/OGData.astro';
 import Recipe from '@components/Recipe.astro';
 import RecipeInfo from '@components/RecipeInfo';
+import RecipeMeta from '@components/RecipeMeta.astro';
 import RecipeStructuredData from '@components/RecipeStructuredData.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 
@@ -51,7 +51,7 @@ export const getStaticPaths = (async () => {
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { recipe, categories } = Astro.props;
-const { createdAt, updatedAt, categories: recipeCategories } = recipe.data;
+const { categories: recipeCategories } = recipe.data;
 const { Content, headings } = await recipe.render();
 ---
 
@@ -76,11 +76,7 @@ const { Content, headings } = await recipe.render();
         >
         <section class="max-w-[300px] relative">
             <RecipeInfo headings={headings} client:load>
-                <Dates
-                    createdAt={createdAt}
-                    updatedAt={updatedAt}
-                    slot="Dates"
-                />
+                <RecipeMeta recipe={recipe} slot="Meta" />
                 <CategoryList
                     categories={categories}
                     highlightedCategories={recipeCategories}

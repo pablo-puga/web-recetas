@@ -11,7 +11,12 @@ const scrollTo = (level: number, id: string) => {
     const element = document.querySelector(
         `${RECIPE_WRAPPER} > h${level}${id}`,
     );
-    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.history.pushState(
+        {},
+        '',
+        `${window.location.protocol}//${window.location.host}${window.location.pathname}${id}`,
+    );
+    element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 };
 
 export const TableOfContents = ({

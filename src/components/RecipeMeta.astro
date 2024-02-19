@@ -1,0 +1,102 @@
+---
+import { format } from 'date-fns';
+import { FaRegClock } from 'react-icons/fa6';
+import { GiForkKnifeSpoon } from 'react-icons/gi';
+import { MdCalendarToday, MdEditCalendar } from 'react-icons/md';
+
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    recipe: CollectionEntry<'recipes'>;
+}
+
+const DISPLAY_FORMAT = 'dd.MM.yyyy';
+
+const { createdAt, updatedAt, recipeYield, prepTime, cookTime } =
+    Astro.props.recipe.data;
+const servings =
+    recipeYield && recipeYield?.units
+        ? `${recipeYield.portions} (${recipeYield.units})`
+        : recipeYield?.portions;
+---
+
+<table>
+    <tbody>
+        <tr>
+            <th>Publicada</th>
+            <td><MdCalendarToday />{format(createdAt, DISPLAY_FORMAT)}</td>
+        </tr>
+        {
+            updatedAt && (
+                <tr>
+                    <th>Actualizada</th>
+                    <td>
+                        <MdEditCalendar />
+                        {format(updatedAt, DISPLAY_FORMAT)}
+                    </td>
+                </tr>
+            )
+        }
+        {
+            recipeYield && (
+                <tr>
+                    <>
+                        <th>Raciones</th>
+                        <td>
+                            <GiForkKnifeSpoon />
+                            {servings}
+                        </td>
+                    </>
+                </tr>
+            )
+        }
+
+        {
+            prepTime && cookTime && (
+                <>
+                    <tr>
+                        <>
+                            <th>Preparación</th>
+                            <td>
+                                <FaRegClock />
+                                {prepTime} min
+                            </td>
+                        </>
+                    </tr>
+                    <tr>
+                        <>
+                            <th>Cocinado</th>
+                            <td>
+                                <FaRegClock />
+                                {cookTime} min
+                            </td>
+                        </>
+                    </tr>
+                </>
+            )
+        }
+    </tbody>
+</table>
+
+<style>
+    tbody {
+        @apply flex flex-col gap-1;
+    }
+
+    tr {
+        @apply flex flex-row gap-4;
+    }
+
+    th {
+        @apply font-medium text-left;
+        width: 120px;
+    }
+
+    td {
+        @apply text-right grow flex flex-row items-center gap-2;
+
+        svg {
+            @apply text-theme-teal-600;
+        }
+    }
+</style>

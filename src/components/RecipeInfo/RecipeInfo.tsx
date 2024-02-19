@@ -11,11 +11,11 @@ import { TableOfContents } from '@components/TableOfContents';
 
 interface Props {
     headings: MarkdownHeading[];
-    Dates?: ReactElement;
+    Meta?: ReactElement;
     CategoryList?: ReactElement;
 }
 
-const RecipeInfo = ({ headings, Dates, CategoryList }: Props) => {
+const RecipeInfo = ({ headings, Meta, CategoryList }: Props) => {
     const [isOpen, toggleIsOpen] = useReducer((state) => {
         const newState = !state;
         if (newState) {
@@ -53,7 +53,7 @@ const RecipeInfo = ({ headings, Dates, CategoryList }: Props) => {
                 </button>
                 <div className="relative lg:hidden"></div>
                 <h2 className="text-2xl font-semibold">Información</h2>
-                {Dates}
+                {Meta}
                 <hr />
                 <TableOfContents headings={headings} />
                 <hr />
