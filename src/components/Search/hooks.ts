@@ -111,7 +111,10 @@ export const useSearch = () => {
 
     const setDeferredQuery = useCallback(
         (newQuery: string) => {
-            updateTimeout(() => setQuery(newQuery), 1000);
+            updateTimeout(
+                () => setQuery(newQuery),
+                import.meta.env.PUBLIC_SEARCH_DELAY,
+            );
         },
         [setQuery, updateTimeout],
     );

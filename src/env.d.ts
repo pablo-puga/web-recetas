@@ -6,6 +6,7 @@ interface ImportMetaEnv {
     readonly RECIPES_PER_PAGE: number;
     readonly PUBLIC_RECENT_RESULTS_LIFETIME: number;
     readonly PUBLIC_MAX_RECENT_RESULTS: number;
+    readonly PUBLIC_SEARCH_DELAY: number;
 }
 
 interface ImportMeta {
