@@ -2,11 +2,16 @@ import clsx from 'clsx';
 
 import { type Recipe } from './hooks';
 
-export const SearchResult = ({ recipe }: { recipe: Recipe }) => {
+interface Props {
+    recipe: Recipe;
+    onClick: (recipe: Recipe) => void;
+}
+
+export const SearchResult = ({ recipe, onClick }: Props) => {
     const { slug, title, description, categories, cover } = recipe;
 
     return (
-        <a href={`/receta/${slug}`}>
+        <a href={`/receta/${slug}`} onClick={() => onClick(recipe)}>
             <article
                 className={clsx(
                     'bg-white hover:bg-theme-teal-200 shadow-sm rounded flex flex-row p-2 max-h-[125px]',
@@ -22,8 +27,8 @@ export const SearchResult = ({ recipe }: { recipe: Recipe }) => {
                         />
                     </div>
                 )}
-                <div className="grow flex flex-col gap-1">
-                    <h2 className="text-lg font-medium sm:font-semibold">
+                <div className="grow flex flex-col gap-1 max-w-full overflow-hidden">
+                    <h2 className="text-lg font-medium overflow-hidden text-ellipsis whitespace-nowrap sm:font-semibold sm:overflow-visible sm:whitespace-normal">
                         {title}
                     </h2>
                     <p
