@@ -1,0 +1,21 @@
+---
+import RecipeListItem from './RecipeListItem.astro';
+
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    recipes: CollectionEntry<'recipes'>[];
+}
+
+const { recipes } = Astro.props;
+---
+
+<ul>
+    {
+        recipes.map((recipe) => (
+            <li>
+                <RecipeListItem recipe={recipe} />
+            </li>
+        ))
+    }
+</ul>

@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 
 import CategoryList from '@components/CategoryList.astro';
-import RecipeListItem from '@components/RecipeListItem.astro';
+import RecipeList from '@components/RecipeList.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 
 export const prerender = true;
@@ -63,15 +63,7 @@ Object.keys(categoriesMap).forEach((categoryName) =>
                 </section>
                 <section class="w-full">
                     <h2>Recetas recientes</h2>
-                    <ul>
-                        {
-                            recipes.slice(0, 5).map((recipe) => (
-                                <li>
-                                    <RecipeListItem recipe={recipe} />
-                                </li>
-                            ))
-                        }
-                    </ul>
+                    <RecipeList recipes={recipes.slice(0, 5)} />
                 </section>
             </div>
             <div class="lg:max-w-[300px]">
