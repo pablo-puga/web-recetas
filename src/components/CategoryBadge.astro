@@ -9,7 +9,7 @@ const { name, count, highlight = false } = Astro.props;
 ---
 
 <a
-    href={`/categoria/${name.toLocaleLowerCase()}`}
+    href={`/categoria/${name.toLocaleLowerCase()}/pagina/1`}
     aria-current={highlight ? 'true' : 'false'}
 >
     {name} - {count}
@@ -21,6 +21,6 @@ const { name, count, highlight = false } = Astro.props;
     }
 
     a[aria-current='true'] {
-        @apply font-bold border-2 text-theme-red-600 border-theme-red-600 hover:bg-theme-red-600 hover:text-white;
+        @apply font-bold border-2 text-theme-teal-700 border-theme-teal-700 hover:bg-theme-teal-800 hover:border-theme-teal-800 hover:text-white;
     }
 </style>
