@@ -12,7 +12,7 @@
     }
 
     h2 {
-        @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mt-2 mb-1;
+        @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mt-2 mb-1 lg:mt-3 lg:mb-2;
     }
 
     h3 {
@@ -37,7 +37,11 @@
 
     ul,
     ol {
-        @apply flex flex-col gap-2 pl-5;
+        @apply flex flex-col gap-2 pl-5 mt-2 mb-1 lg:gap-3 lg:mt-3 lg:mb-2;
+
+        li {
+            @apply leading-relaxed;
+        }
     }
 
     ul {
@@ -49,11 +53,28 @@
     }
 
     img {
-        @apply rounded-sm shadow;
+        @apply rounded-sm shadow mt-2 mb-1;
+    }
+
+    b,
+    strong {
+        @apply font-semibold lg:font-bold;
+    }
+
+    blockquote {
+        @apply border-l-4 border-theme-red-200 pl-2 py-1 md:border-l-8 md:pl-3 md:py-2;
+    }
+
+    hr {
+        @apply border-theme-grey-300/80 mt-3 mb-2;
+    }
+
+    a {
+        @apply text-theme-red-400 visited:text-theme-red-600 hover:underline hover:text-theme-red-800 transition-colors font-medium;
     }
 
     .ingredients-block {
-        @apply flex flex-col gap-3 sm:flex-row sm:flex-wrap mt-3;
+        @apply flex flex-col sm:flex-row sm:flex-wrap mt-3;
 
         @screen sm {
             @apply mt-6;
@@ -74,7 +95,7 @@
         }
 
         ul {
-            @apply list-none pl-0;
+            @apply list-none pl-0 gap-2;
             li {
                 @apply flex flex-row items-center gap-2;
             }
