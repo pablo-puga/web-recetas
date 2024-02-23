@@ -1,9 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 
-import CategoryList from '@components/CategoryList.astro';
 import RecipeList from '@components/RecipeList.astro';
-import BaseLayout from '@layouts/BaseLayout.astro';
+import ContentWithCategoriesLayout from '@layouts/ContentWithCategoriesLayout.astro';
 
 export const prerender = true;
 const recipes = await getCollection('recipes', ({ data }) => {
@@ -31,54 +30,28 @@ Object.keys(categoriesMap).forEach((categoryName) =>
 );
 ---
 
-<BaseLayout title="Las Recetas de Pablo" slug={`/`} noTopMargin={true}>
-    <main>
-        <div class="cover flex items-center justify-center">
-            <h1
-                class:list={[
-                    'inline-block bg-theme-grey-100 text-2xl font-medium py-2 px-3 rounded-sm text-theme-red-400',
-                    'sm:text-3xl',
-                    'md:text-4xl md:py-3 md:px-4 md:font-semibold',
-                    'lg:text-5xl md:py-5 md:px-6',
-                    'xl:py-7 xl:px-11',
-                ]}
-            >
-                Las Recetas de Pablo
-            </h1>
-        </div>
-        <div
-            class="flex flex-col gap-3 sm:gap-4 md:gap-5 lg:flex-row lg:justify-center flex-nowrap px-4 mt-4 sm:mt-6 md:px-8 md:mt-8 lg:mt-10"
-        >
-            <div
-                class="flex flex-col items-center lg:max-w-[900px] gap-3 md:gap-5"
-            >
-                <section class="w-full">
-                    <h2>Sobre mi</h2>
-                    <p class="leading-relaxed">
-                        Soy un ingeniero de telecomunicaciones al que le gusta
-                        cocinar. Así que me he animado a crear esta página cómo
-                        repositorio de alguna de las recetas que me gustan y/o
-                        hago a menudo.
-                    </p>
-                </section>
-                <section class="w-full">
-                    <h2>Recetas recientes</h2>
-                    <RecipeList recipes={recipes.slice(0, 5)} />
-                </section>
-            </div>
-            <div class="lg:max-w-[300px]">
-                <CategoryList categories={categories} />
-            </div>
-        </div>
-    </main>
-</BaseLayout>
+<ContentWithCategoriesLayout
+    title="Las Recetas de Pablo"
+    slug="/"
+    categories={categories}
+>
+    <Fragment slot="content">
+        <section class="w-full">
+            <h2>Sobre mi</h2>
+            <p class="leading-relaxed">
+                Soy un ingeniero de telecomunicaciones al que le gusta cocinar.
+                Así que me he animado a crear esta página cómo repositorio de
+                alguna de las recetas que me gustan y/o hago a menudo.
+            </p>
+        </section>
+        <section class="w-full">
+            <h2>Recetas recientes</h2>
+            <RecipeList recipes={recipes.slice(0, 5)} />
+        </section>
+    </Fragment>
+</ContentWithCategoriesLayout>
 
 <style>
-    .cover {
-        background-image: url(/img/cabecera-mediana.jpg);
-        @apply min-h-[200px] sm:min-h-[250px] md:min-h-[300] lg:min-h-[350px] bg-center bg-local bg-cover;
-    }
-
     h2 {
         @apply text-lg text-theme-red-400 sm:text-xl md:text-2xl lg:text-3xl font-bold mt-2 mb-1 lg:mt-3 lg:mb-2;
     }
