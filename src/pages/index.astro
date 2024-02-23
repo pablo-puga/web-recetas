@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 
 import RecipeList from '@components/RecipeList.astro';
 import ContentWithCategoriesLayout from '@layouts/ContentWithCategoriesLayout.astro';
+import { getCategoriesFromRecipes } from '@lib/categories';
 
 export const prerender = true;
 const recipes = await getCollection('recipes', ({ data }) => {
@@ -11,23 +12,7 @@ const recipes = await getCollection('recipes', ({ data }) => {
 
 recipes.sort((a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime());
 
-const categoriesMap: Record<string, number> = {};
-
-recipes.forEach((recipe) => {
-    recipe.data.categories.forEach((c) => {
-        if (categoriesMap[c]) categoriesMap[c]++;
-        else categoriesMap[c] = 1;
-    });
-});
-
-const categories: { name: string; count: number }[] = [];
-
-Object.keys(categoriesMap).forEach((categoryName) =>
-    categories.push({
-        name: categoryName,
-        count: categoriesMap[categoryName],
-    }),
-);
+const categories = getCategoriesFromRecipes(recipes);
 ---
 
 <ContentWithCategoriesLayout

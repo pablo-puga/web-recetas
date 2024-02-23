@@ -4,8 +4,8 @@ import { getCollection } from 'astro:content';
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { PAGINATION_PAGE_SIZE } from '@lib/constants';
 
-export const RECIPES_PER_PAGE = import.meta.env.RECIPES_PER_PAGE || 10;
 export const prerender = true;
 export const getStaticPaths = (async ({ paginate }) => {
     const recipes = await getCollection('recipes', ({ data }) => {
@@ -30,7 +30,7 @@ export const getStaticPaths = (async ({ paginate }) => {
             params: {
                 category: category.toLocaleLowerCase(),
             },
-            pageSize: RECIPES_PER_PAGE,
+            pageSize: PAGINATION_PAGE_SIZE,
         });
     });
 }) satisfies GetStaticPaths;

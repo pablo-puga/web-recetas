@@ -1,0 +1,37 @@
+---
+import type { Page } from 'astro';
+
+interface Props {
+    page: Page;
+}
+
+const { page } = Astro.props;
+---
+
+<div class="w-full flex justify-between">
+    <span>Viendo {page.start + 1} - {page.end + 1} de {page.total}</span>
+    <span>Página {page.currentPage} de {page.lastPage}</span>
+</div>
+<slot />
+{
+    page.total >= page.size && (
+        <nav>
+            <ul>
+                {page.url.prev && (
+                    <li>
+                        <a href={page.url.prev}>
+                            &lt; <span>Anterior</span>
+                        </a>
+                    </li>
+                )}
+                {page.url.next && (
+                    <li>
+                        <a href={page.url.next}>
+                            <span>Siguiente</span> &gt;
+                        </a>
+                    </li>
+                )}
+            </ul>
+        </nav>
+    )
+}

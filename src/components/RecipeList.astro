@@ -10,7 +10,9 @@ interface Props {
 const { recipes } = Astro.props;
 ---
 
-<ul class="flex flex-col gap-4 mt-3 sm:gap-5">
+<ul
+    class="flex flex-col gap-4 mt-3 sm:gap-5 w-full lg:min-w-[600px] xl:min-w-[800px]"
+>
     {
         recipes.map((recipe) => (
             <li>

@@ -3,9 +3,12 @@ import { getCollection } from 'astro:content';
 
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 
-import BaseLayout from '@layouts/BaseLayout.astro';
+import Pagination from '@components/Pagination.astro';
+import RecipeList from '@components/RecipeList.astro';
+import ContentWithCategoriesLayout from '@layouts/ContentWithCategoriesLayout.astro';
+import { getCategoriesFromRecipes } from '@lib/categories';
+import { PAGINATION_PAGE_SIZE } from '@lib/constants';
 
-export const RECIPES_PER_PAGE = import.meta.env.RECIPES_PER_PAGE || 10;
 export const prerender = true;
 export const getStaticPaths = (async ({ paginate }) => {
     const recipes = await getCollection('recipes', ({ data }) => {
@@ -16,41 +19,26 @@ export const getStaticPaths = (async ({ paginate }) => {
         (a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime(),
     );
 
-    return paginate(recipes, { pageSize: RECIPES_PER_PAGE });
+    const categories = getCategoriesFromRecipes(recipes);
+
+    return paginate(recipes, {
+        pageSize: PAGINATION_PAGE_SIZE,
+        props: { categories },
+    });
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-const { page } = Astro.props;
+const { page, categories } = Astro.props;
+const pageRecipes = page.data;
 ---
 
-<BaseLayout
+<ContentWithCategoriesLayout
     title={`Las Recetas de Pablo | Página ${page.currentPage}`}
     slug={`/pagina/${page.currentPage}`}
+    categories={categories}
 >
-    <main class="flex flex-col items-center">
-        <h1>
-            Página {page.currentPage} de {page.lastPage}
-        </h1>
-        <ul>
-            {
-                page.data.map((recipe) => (
-                    <li>
-                        <article>
-                            <>
-                                <h1>
-                                    <a href={`/receta/${recipe.slug}`}>
-                                        {recipe.data.title}
-                                    </a>
-                                </h1>
-                                <time>{recipe.data.createdAt}</time>
-                            </>
-                        </article>
-                    </li>
-                ))
-            }
-        </ul>
-        {page.url.prev ? <a href={page.url.prev}>Anterior</a> : null}
-        {page.url.next ? <a href={page.url.next}>Siguiente</a> : null}
-    </main>
-</BaseLayout>
+    <Pagination slot="content" page={page}>
+        <RecipeList recipes={pageRecipes} />
+    </Pagination>
+</ContentWithCategoriesLayout>

@@ -10,6 +10,7 @@ import RecipeInfo from '@components/RecipeInfo';
 import RecipeMeta from '@components/RecipeMeta.astro';
 import RecipeStructuredData from '@components/RecipeStructuredData.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { getCategoriesFromRecipes } from '@lib/categories';
 
 export const prerender = true;
 export const getStaticPaths = (async () => {
@@ -17,25 +18,7 @@ export const getStaticPaths = (async () => {
         return import.meta.env.PROD ? data.published === true : true;
     });
 
-    const categoriesMap: Record<string, number> = {};
-
-    recipes.forEach((recipe) => {
-        recipe.data.categories.forEach((c) => {
-            if (categoriesMap[c]) categoriesMap[c]++;
-            else categoriesMap[c] = 1;
-        });
-    });
-
-    const categories: { name: string; count: number }[] = [];
-
-    Object.keys(categoriesMap).forEach((categoryName) =>
-        categories.push({
-            name: categoryName,
-            count: categoriesMap[categoryName],
-        }),
-    );
-
-    categories.sort((a, b) => a.name.localeCompare(b.name));
+    const categories = getCategoriesFromRecipes(recipes);
 
     return recipes.map((recipe) => ({
         params: {
