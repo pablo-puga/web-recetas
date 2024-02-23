@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { ViewTransitions } from 'astro:transitions';
 
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 
@@ -46,6 +47,7 @@ const { Content, headings } = await recipe.render();
     <Fragment slot="head">
         <RecipeStructuredData recipe={recipe} />
         <OGData recipe={recipe} />
+        <ViewTransitions />
     </Fragment>
     <main
         class="flex flex-row mb-20 md:px-2 xl:px-0 lg:gap-10 justify-center w-full"

@@ -1,4 +1,6 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
+
 import BaseLayout from './BaseLayout.astro';
 
 import CategoryList from '@components/CategoryList.astro';
@@ -13,6 +15,7 @@ const { categories, title, slug } = Astro.props;
 ---
 
 <BaseLayout title={title} slug={slug} noTopMargin={true}>
+    <ViewTransitions slot="head" />
     <main>
         <div class="cover flex items-center justify-center">
             <h1
