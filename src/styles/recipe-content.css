@@ -37,7 +37,7 @@
 
     ul,
     ol {
-        @apply flex flex-col gap-2 pl-5 mt-2 mb-1 lg:gap-3 lg:mt-3 lg:mb-2;
+        @apply flex flex-col gap-2 mt-2 mb-1 lg:gap-3 lg:mt-3 lg:mb-2;
 
         li {
             @apply leading-relaxed;
@@ -45,11 +45,11 @@
     }
 
     ul {
-        @apply list-disc;
+        @apply list-disc pl-6;
     }
 
     ol {
-        @apply list-decimal;
+        @apply list-decimal pl-5;
     }
 
     img {

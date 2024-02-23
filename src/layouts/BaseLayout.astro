@@ -36,7 +36,7 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
     </head>
     <body
         class={clsx(
-            'bg-theme-grey-100/50 text-theme-grey-900 mt-14 relative md:mt-16 lg:mt-20',
+            'bg-theme-grey-100/50 text-theme-grey-900 mt-14 relative md:mt-16 lg:mt-20 flex flex-col justify-between',
             extraClasses,
         )}
     >
@@ -74,11 +74,27 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
         padding-right: 15px;
     }
 
-    @media (max-width: 1024px) {
+    .info-opened {
+        height: 100vh;
+        overflow-y: hidden;
+        padding-right: 15px;
+    }
+
+    @screen md {
+        body {
+            min-height: calc(100vh - 4rem);
+        }
+    }
+
+    @screen lg {
+        body {
+            min-height: calc(100vh - 5rem);
+        }
+
         .info-opened {
-            height: 100vh;
-            overflow-y: hidden;
-            padding-right: 15px;
+            height: auto;
+            overflow-y: auto;
+            padding-right: auto;
         }
     }
 </style>
