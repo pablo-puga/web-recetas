@@ -49,11 +49,24 @@ Object.keys(categoriesMap).forEach((categoryName) =>
             <h2>Recetas recientes</h2>
             <RecipeList recipes={recipes.slice(0, 5)} />
         </section>
+        <div class="mt-3 w-full text-center">
+            <a
+                href="/pagina/1"
+                class:list={[
+                    'bg-theme-red-100 px-2 py-1 inline-block w-full text-center font-medium rounded-sm hover:bg-theme-red-400 hover:text-white',
+                    'sm:w-auto sm:min-w-[300px] px-3 py-2',
+                    'md:text-lg',
+                    'lg:font-semibold',
+                ]}
+            >
+                Ver más...
+            </a>
+        </div>
     </Fragment>
-</ContentWithCategoriesLayout>
 
-<style>
-    h2 {
-        @apply text-lg text-theme-red-400 sm:text-xl md:text-2xl lg:text-3xl font-bold mt-2 mb-1 lg:mt-3 lg:mb-2;
-    }
-</style>
+    <style>
+        h2 {
+            @apply text-lg text-theme-red-400 sm:text-xl md:text-2xl lg:text-3xl font-bold mt-2 mb-1 lg:mt-3 lg:mb-2;
+        }
+    </style>
+</ContentWithCategoriesLayout>
