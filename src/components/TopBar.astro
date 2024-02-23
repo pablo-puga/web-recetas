@@ -17,7 +17,13 @@ import Search from './Search';
     <span
         class="text-base font-medium sm:font-bold grow sm:text-xl overflow-hidden text-ellipsis whitespace-nowrap"
     >
-        Las Recetas de Pablo
+        <a href="/">Las Recetas de Pablo</a>
     </span>
     <Search client:idle className="justify-self-end" />
 </header>
+
+<style>
+    a {
+        @apply transition-all block hover:-translate-y-1 hover:drop-shadow hover:text-red-800;
+    }
+</style>

@@ -144,7 +144,7 @@ export const useRecentResult = () => {
         if (window.localStorage) {
             window.localStorage.setItem(
                 'recent-results',
-                JSON.stringify(results),
+                JSON.stringify({ appVersion: __APP_VERSION__, results }),
             );
         }
         setResults(results);
@@ -156,9 +156,16 @@ export const useRecentResult = () => {
             if (stored) {
                 try {
                     const now = new Date();
-                    const storedResults = (
-                        JSON.parse(stored) as RecentSearchResult[]
-                    )
+                    const storedData = JSON.parse(stored) as {
+                        appVersion: string;
+                        results: RecentSearchResult[];
+                    };
+
+                    if (storedData.appVersion !== __APP_VERSION__) {
+                        return updateResults([]);
+                    }
+
+                    const storedResults = storedData.results
                         .map((r) => {
                             const newResult = r;
                             newResult.searchDate = parseJSON(

@@ -9,6 +9,7 @@ interface Props {
     slug: string;
     description?: string;
     extraClasses?: string;
+    noTopMargin?: boolean;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
     description = 'Las Recetas de Pablo',
     slug,
     extraClasses,
+    noTopMargin = false,
 } = Astro.props;
 const canonicalLink = `${import.meta.env.SITE}${slug}`;
 ---
@@ -36,8 +38,9 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
     </head>
     <body
         class={clsx(
-            'bg-theme-grey-100/50 text-theme-grey-900 mt-14 relative md:mt-16 lg:mt-20 flex flex-col justify-between',
+            'bg-theme-grey-100/50 text-theme-grey-900 relative flex flex-col justify-between',
             extraClasses,
+            noTopMargin ? 'with-fixed-top-margin' : 'with-variable-top-margin',
         )}
     >
         <TopBar />
@@ -68,6 +71,14 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
         stroke: currentColor;
     }
 
+    .with-variable-top-margin {
+        @apply mt-14 md:mt-16 lg:mt-20;
+    }
+
+    .with-fixed-top-margin {
+        @apply mt-12;
+    }
+
     .search-opened {
         height: 100vh;
         overflow-y: hidden;
@@ -80,14 +91,22 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
         padding-right: 15px;
     }
 
+    body.with-fixed-top-margin {
+        min-height: calc(100vh - 3rem);
+    }
+
+    body.with-variable-top-margin {
+        min-height: calc(100vh - 3.5rem);
+    }
+
     @screen md {
-        body {
+        body.with-variable-top-margin {
             min-height: calc(100vh - 4rem);
         }
     }
 
     @screen lg {
-        body {
+        body.with-variable-top-margin {
             min-height: calc(100vh - 5rem);
         }
 

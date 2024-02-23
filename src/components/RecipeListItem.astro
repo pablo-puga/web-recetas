@@ -1,0 +1,63 @@
+---
+import { format } from 'date-fns';
+import { FaRegClock } from 'react-icons/fa6';
+import { MdCalendarToday } from 'react-icons/md';
+
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    recipe: CollectionEntry<'recipes'>;
+}
+
+const { recipe } = Astro.props;
+const slug = recipe.slug;
+const { title, totalTime, cover, description, categories, createdAt } =
+    recipe.data;
+---
+
+<article>
+    {
+        cover && (
+            <div class="cover-wrapper">
+                <img
+                    class="w-full h-auto"
+                    src={cover.src}
+                    alt={`Foto de ${title}`}
+                    width={cover.width}
+                    height={cover.height}
+                />
+            </div>
+        )
+    }
+    <div class="flex gap-2 items-center justify-between">
+        <span class="flex gap-2 items-center">
+            <FaRegClock /> {totalTime} min</span
+        >
+        <span class="flex gap-2 items-center">
+            <MdCalendarToday />
+            <time>{format(createdAt, 'dd.MM.yyyy')}</time>
+        </span>
+    </div>
+    <h3>
+        <a href={`/receta/${slug}`}>
+            {title}
+        </a>
+    </h3>
+    <ul class="flex gap-2 items-center">
+        {categories.map((c) => <li>{c}</li>)}
+    </ul>
+    <p>{description}</p>
+    <a href={`/receta/${slug}`}>Leer más...</a>
+</article>
+
+<style>
+    .cover-wrapper {
+        max-height: 400px;
+        overflow: hidden;
+        @apply flex flex-row items-center justify-center;
+    }
+
+    svg {
+        @apply text-theme-teal-600;
+    }
+</style>

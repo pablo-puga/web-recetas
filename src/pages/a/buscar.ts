@@ -46,7 +46,7 @@ export const GET: APIRoute = async ({ request, url }) => {
             recipes: filteredRecipes.map(({ slug, data }) => ({
                 slug,
                 title: data.title,
-                description: data.description,
+                description: data.description || data.title,
                 cover: data.cover?.src,
                 categories: data.categories,
             })),

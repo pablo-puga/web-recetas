@@ -16,6 +16,11 @@ const { APP_URL = 'http://localhost:4321' } = loadEnv(
 export default defineConfig({
     site: APP_URL,
     trailingSlash: 'never',
+    vite: {
+        define: {
+            __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
+        },
+    },
     integrations: [
         tailwind({
             applyBaseStyles: false,
@@ -39,7 +44,6 @@ export default defineConfig({
         mode: 'standalone',
     }),
     redirects: {
-        '/': '/pagina/1',
         '/categoria/[category]': '/categoria/[category]/pagina/1',
     },
 });

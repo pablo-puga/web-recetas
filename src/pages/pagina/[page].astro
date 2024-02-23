@@ -28,27 +28,29 @@ const { page } = Astro.props;
     title={`Las Recetas de Pablo | Página ${page.currentPage}`}
     slug={`/pagina/${page.currentPage}`}
 >
-    <h1>
-        Página {page.currentPage} de {page.lastPage}
-    </h1>
-    <ul>
-        {
-            page.data.map((recipe) => (
-                <li>
-                    <article>
-                        <>
-                            <h1>
-                                <a href={`/receta/${recipe.slug}`}>
-                                    {recipe.data.title}
-                                </a>
-                            </h1>
-                            <time>{recipe.data.createdAt}</time>
-                        </>
-                    </article>
-                </li>
-            ))
-        }
-    </ul>
-    {page.url.prev ? <a href={page.url.prev}>Anterior</a> : null}
-    {page.url.next ? <a href={page.url.next}>Siguiente</a> : null}
+    <main class="flex flex-col items-center">
+        <h1>
+            Página {page.currentPage} de {page.lastPage}
+        </h1>
+        <ul>
+            {
+                page.data.map((recipe) => (
+                    <li>
+                        <article>
+                            <>
+                                <h1>
+                                    <a href={`/receta/${recipe.slug}`}>
+                                        {recipe.data.title}
+                                    </a>
+                                </h1>
+                                <time>{recipe.data.createdAt}</time>
+                            </>
+                        </article>
+                    </li>
+                ))
+            }
+        </ul>
+        {page.url.prev ? <a href={page.url.prev}>Anterior</a> : null}
+        {page.url.next ? <a href={page.url.next}>Siguiente</a> : null}
+    </main>
 </BaseLayout>
