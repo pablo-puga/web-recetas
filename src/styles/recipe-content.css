@@ -1,6 +1,6 @@
 .recipe-content {
     h1 {
-        @apply text-5xl font-bold mt-3 mb-6 text-theme-red-500;
+        @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mt-3 mb-6 text-theme-red-500;
     }
 
     h2,
@@ -12,27 +12,27 @@
     }
 
     h2 {
-        @apply text-3xl font-bold mt-2 mb-1;
+        @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mt-2 mb-1;
     }
 
     h3 {
-        @apply text-2xl font-bold mt-2 mb-1;
+        @apply text-base sm:text-lg md:text-xl lg:text-2xl font-bold mt-2 mb-1;
     }
 
     h4 {
-        @apply text-xl font-medium mt-2 mb-1;
+        @apply text-base sm:text-lg md:text-xl lg:font-medium mt-2 mb-1;
     }
 
     h5 {
-        @apply text-lg font-medium mt-2 mb-1;
+        @apply text-base font-light sm:font-normal md:text-lg lg:font-medium mt-2 mb-1;
     }
 
     h6 {
-        @apply text-base font-medium mt-2 mb-1;
+        @apply text-sm sm:text-base font-light lg:font-medium mt-2 mb-1;
     }
 
     p {
-        @apply mt-2 mb-3 leading-relaxed;
+        @apply mt-2 mb-3 leading-relaxed text-justify;
     }
 
     ul,
@@ -46,6 +46,10 @@
 
     ol {
         @apply list-decimal;
+    }
+
+    img {
+        @apply rounded-sm shadow;
     }
 
     .ingredients-block {
