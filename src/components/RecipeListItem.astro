@@ -1,6 +1,7 @@
 ---
 import { format } from 'date-fns';
 import { FaRegClock } from 'react-icons/fa6';
+import { IoMdPricetags } from 'react-icons/io';
 import { MdCalendarToday } from 'react-icons/md';
 
 import type { CollectionEntry } from 'astro:content';
@@ -15,7 +16,12 @@ const { title, totalTime, cover, description, categories, createdAt } =
     recipe.data;
 ---
 
-<article>
+<article
+    class:list={[
+        'flex flex-col gap-1 bg-white shadow rounded-sm pb-2 overflow-hidden md:pb-3 lg:pb-4',
+        !cover && 'pt-2 md:pt-3',
+    ]}
+>
     {
         cover && (
             <div class="cover-wrapper">
@@ -29,35 +35,85 @@ const { title, totalTime, cover, description, categories, createdAt } =
             </div>
         )
     }
-    <div class="flex gap-2 items-center justify-between">
-        <span class="flex gap-2 items-center">
-            <FaRegClock /> {totalTime} min</span
-        >
-        <span class="flex gap-2 items-center">
+    <div
+        class:list={[
+            'flex items-center justify-between text-xs',
+            cover ? 'order-2 md:mt-2' : 'order-4',
+            'sm:text-sm',
+        ]}
+    >
+        {
+            totalTime && (
+                <span class="flex gap-1 items-center">
+                    <FaRegClock /> {totalTime} min
+                </span>
+            )
+        }
+        <span class="flex gap-1 items-center">
             <MdCalendarToday />
             <time>{format(createdAt, 'dd.MM.yyyy')}</time>
         </span>
     </div>
-    <h3>
-        <a href={`/receta/${slug}`}>
+    <h3
+        class="text-theme-red-500 font-medium order-3 sm:text-lg md:text-xl lg:font-semibold"
+    >
+        <a
+            href={`/receta/${slug}`}
+            class="visited:text-theme-red-600 hover:text-theme-red-800 transition-colors"
+        >
             {title}
         </a>
     </h3>
-    <ul class="flex gap-2 items-center">
-        {categories.map((c) => <li>{c}</li>)}
-    </ul>
-    <p>{description}</p>
-    <a href={`/receta/${slug}`}>Leer más...</a>
+    <div class="order-6 text-sm flex gap-1 items-center justify-end">
+        <IoMdPricetags />
+        <ul class="category-list">
+            {
+                categories.map((c) => (
+                    <li>
+                        <a
+                            href={`/categoria/${c.toLocaleLowerCase()}/pagina/1`}
+                        >
+                            {c}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+    <p class="order-5 text-sm sm:text-base">
+        <span>{description}</span>
+        <a class="more" href={`/receta/${slug}`}>Leer más...</a>
+    </p>
 </article>
 
 <style>
     .cover-wrapper {
         max-height: 400px;
         overflow: hidden;
-        @apply flex flex-row items-center justify-center;
+        @apply flex flex-row items-center justify-center order-1;
+    }
+
+    article > :not(.cover-wrapper) {
+        @apply px-2 md:px-3 lg:px-4;
     }
 
     svg {
         @apply text-theme-teal-600;
+    }
+
+    .category-list {
+        @apply flex items-center gap-1;
+
+        a {
+            @apply bg-theme-grey-200 px-1 rounded-sm visited:bg-theme-grey-200 hover:bg-theme-grey-300 transition-colors;
+        }
+    }
+
+    .more {
+        @apply text-theme-red-400 visited:text-theme-red-600 hover:underline hover:text-theme-red-800 transition-colors;
+    }
+
+    .more:not(:first) {
+        @apply ml-2;
     }
 </style>

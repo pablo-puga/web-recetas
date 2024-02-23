@@ -28,7 +28,7 @@ const { categories, title, slug } = Astro.props;
             </h1>
         </div>
         <div
-            class="flex flex-col gap-3 sm:gap-4 md:gap-5 lg:flex-row lg:justify-center flex-nowrap px-4 mt-4 sm:mt-6 md:px-8 md:mt-8 lg:mt-10"
+            class="flex flex-col gap-3 sm:gap-4 md:gap-5 lg:gap-14 lg:flex-row lg:justify-center flex-nowrap px-4 mt-4 sm:mt-6 md:px-8 md:mt-8 lg:mt-10"
         >
             <div
                 class="flex flex-col items-center lg:max-w-[900px] gap-3 md:gap-5"
@@ -36,7 +36,7 @@ const { categories, title, slug } = Astro.props;
                 <slot name="content" />
             </div>
             <div class="lg:max-w-[300px]">
-                <CategoryList categories={categories} />
+                <CategoryList categories={categories} headerLevel="H2" />
             </div>
         </div>
     </main>
