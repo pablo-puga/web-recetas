@@ -38,7 +38,7 @@ const pageRecipes = page.data;
     slug={`/pagina/${page.currentPage}`}
     categories={categories}
 >
-    <Pagination slot="content" page={page}>
+    <Pagination page={page}>
         <RecipeList recipes={pageRecipes} />
     </Pagination>
 </ContentWithCategoriesLayout>
