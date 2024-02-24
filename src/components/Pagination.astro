@@ -1,4 +1,6 @@
 ---
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+
 import type { Page } from 'astro';
 
 import { ADJACENT_PAGES } from '@lib/constants';
@@ -24,18 +26,24 @@ const lastPage = page.lastPage;
     <slot />
     {
         page.total >= page.size && (
-            <nav>
-                <ul class="flex gap-1">
+            <nav class="mt-5 mb-5 lg:mb-0 lg:mt-10">
+                <ul class="flex flex-wrap justify-center leading-7 gap-1 text-sm sm:gap-2 md:text-base">
                     {page.url.prev && (
                         <li>
-                            <a href={page.url.prev} class="pagination-item">
-                                &lt; <span>Anterior</span>
+                            <a
+                                href={page.url.prev}
+                                class="pagination-item sm:min-w-[110px]"
+                            >
+                                <FaAngleLeft className="text-lg inline -mt-0.5" />{' '}
+                                <span class="hidden sm:inline">Anterior</span>
                             </a>
                         </li>
                     )}
                     {currentPage - ADJACENT_PAGES > firstPage && (
                         <li>
-                            <a href="/pagina/1">1</a>
+                            <a href="/pagina/1" class="pagination-item">
+                                1
+                            </a>
                         </li>
                     )}
                     {currentPage - ADJACENT_PAGES > firstPage + 1 && (
@@ -65,13 +73,22 @@ const lastPage = page.lastPage;
                     )}
                     {currentPage + ADJACENT_PAGES < lastPage && (
                         <li>
-                            <a href={`/pagina/${lastPage}`}>{lastPage}</a>
+                            <a
+                                href={`/pagina/${lastPage}`}
+                                class="pagination-item"
+                            >
+                                {lastPage}
+                            </a>
                         </li>
                     )}
                     {page.url.next && (
                         <li>
-                            <a href={page.url.next} class="pagination-item">
-                                <span>Siguiente</span> &gt;
+                            <a
+                                href={page.url.next}
+                                class="pagination-item sm:min-w-[110px]"
+                            >
+                                <span class="hidden sm:inline">Siguiente</span>{' '}
+                                <FaAngleRight className="text-lg inline -mt-0.5" />
                             </a>
                         </li>
                     )}
@@ -87,8 +104,10 @@ const lastPage = page.lastPage;
     }
 
     .pagination-item {
+        @apply bg-theme-red-100 px-2 py-1 rounded-sm hover:!bg-theme-red-400 hover:text-white visited:text-theme-grey-900 transition-colors text-center;
+
         &[aria-current='true'] {
-            @apply font-bold;
+            @apply font-bold bg-theme-red-200;
         }
     }
 </style>
