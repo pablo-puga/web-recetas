@@ -3,8 +3,12 @@ import { getCollection } from 'astro:content';
 
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 
-import BaseLayout from '@layouts/BaseLayout.astro';
+import Pagination from '@components/Pagination.astro';
+import RecipeList from '@components/RecipeList.astro';
+import ContentWithCategoriesLayout from '@layouts/ContentWithCategoriesLayout.astro';
+import { getCategoriesFromRecipes } from '@lib/categories';
 import { PAGINATION_PAGE_SIZE } from '@lib/constants';
+import { capitalize } from '@lib/transforms';
 
 export const prerender = true;
 export const getStaticPaths = (async ({ paginate }) => {
@@ -12,16 +16,11 @@ export const getStaticPaths = (async ({ paginate }) => {
         return import.meta.env.PROD ? data.published === true : true;
     });
 
-    const categories: string[] = [];
+    const categories = getCategoriesFromRecipes(recipes);
 
-    recipes.forEach((recipe) => {
-        recipe.data.categories.forEach((c) => {
-            if (categories.includes(c)) return;
-            categories.push(c);
-        });
-    });
+    const categoriesNames = categories.map((c) => c.name);
 
-    return categories.flatMap((category) => {
+    return categoriesNames.flatMap((category) => {
         const filteredRecipes = recipes.filter((recipe) =>
             recipe.data.categories.includes(category),
         );
@@ -31,6 +30,9 @@ export const getStaticPaths = (async ({ paginate }) => {
                 category: category.toLocaleLowerCase(),
             },
             pageSize: PAGINATION_PAGE_SIZE,
+            props: {
+                categories,
+            },
         });
     });
 }) satisfies GetStaticPaths;
@@ -38,34 +40,15 @@ export const getStaticPaths = (async ({ paginate }) => {
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { category } = Astro.params as { category: string };
-const { page } = Astro.props as Props;
+const { page, categories } = Astro.props as Props;
 ---
 
-<BaseLayout
-    title={`Categoría ${category} | Página ${page.currentPage}`}
-    slug={`/categoria/${category.toLocaleLowerCase()}/pagina/${page.currentPage}`}
+<ContentWithCategoriesLayout
+    title={`Categoría "${capitalize(category)}" | Página ${page.currentPage}`}
+    slug={`/categoria/${category}/pagina/${page.currentPage}`}
+    categories={categories}
 >
-    <h1>
-        Categoría: {category}<br />Página {page.currentPage} de {page.lastPage}
-    </h1>
-    <ul>
-        {
-            page.data.map((recipe) => (
-                <li>
-                    <article>
-                        <>
-                            <h1>
-                                <a href={`/receta/${recipe.slug}`}>
-                                    {recipe.data.title}
-                                </a>
-                            </h1>
-                            <time>{recipe.data.createdAt}</time>
-                        </>
-                    </article>
-                </li>
-            ))
-        }
-    </ul>
-    {page.url.prev ? <a href={page.url.prev}>Anterior</a> : null}
-    {page.url.next ? <a href={page.url.next}>Siguiente</a> : null}
-</BaseLayout>
+    <Pagination page={page}>
+        <RecipeList recipes={page.data} />
+    </Pagination>
+</ContentWithCategoriesLayout>
