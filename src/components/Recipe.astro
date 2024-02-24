@@ -16,7 +16,7 @@ const { recipe, className, style } = Astro.props;
 const { title, cover } = recipe.data;
 ---
 
-<article class={clsx('px-2', className)} style={{ ...style }}>
+<article class={clsx('px-2 lg:px-0', className)} style={{ ...style }}>
     {
         cover && (
             <Image

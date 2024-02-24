@@ -43,7 +43,7 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
             noTopMargin ? 'with-fixed-top-margin' : 'with-variable-top-margin',
         )}
     >
-        <TopBar />
+        <TopBar transition:persist />
         <slot />
         <Footer />
     </body>
