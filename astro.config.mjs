@@ -36,7 +36,6 @@ export default defineConfig({
                 !page.includes('palette') &&
                 !page.includes('404') &&
                 !page.includes('500'),
-            customPages: [APP_URL],
         }),
     ],
     output: 'server',
