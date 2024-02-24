@@ -1,37 +1,94 @@
 ---
 import type { Page } from 'astro';
 
+import { ADJACENT_PAGES } from '@lib/constants';
+
 interface Props {
     page: Page;
 }
 
 const { page } = Astro.props;
+
+const currentPage = page.currentPage;
+const firstPage = 1;
+const lastPage = page.lastPage;
 ---
 
-<div class="w-full flex justify-between">
-    <span>Viendo {page.start + 1} - {page.end + 1} de {page.total}</span>
-    <span>Página {page.currentPage} de {page.lastPage}</span>
+<div>
+    <div class="w-full flex justify-between text-sm mb-4 md:text-base lg:mb-5">
+        <span class="info">
+            Viendo {page.start + 1} - {page.end + 1} de {page.total}
+        </span>
+        <span class="info">Página {currentPage} de {lastPage}</span>
+    </div>
+    <slot />
+    {
+        page.total >= page.size && (
+            <nav>
+                <ul class="flex gap-1">
+                    {page.url.prev && (
+                        <li>
+                            <a href={page.url.prev} class="pagination-item">
+                                &lt; <span>Anterior</span>
+                            </a>
+                        </li>
+                    )}
+                    {currentPage - ADJACENT_PAGES > firstPage && (
+                        <li>
+                            <a href="/pagina/1">1</a>
+                        </li>
+                    )}
+                    {currentPage - ADJACENT_PAGES > firstPage + 1 && (
+                        <li>...</li>
+                    )}
+                    {Array.from({ length: page.lastPage }, (_, i) => i + 1)
+                        .filter(
+                            (p) =>
+                                p >= currentPage - ADJACENT_PAGES &&
+                                p <= currentPage + ADJACENT_PAGES,
+                        )
+                        .map((p) => (
+                            <li>
+                                <a
+                                    class="pagination-item"
+                                    aria-current={
+                                        p === currentPage ? 'true' : 'false'
+                                    }
+                                    href={`/pagina/${p}`}
+                                >
+                                    {p}
+                                </a>
+                            </li>
+                        ))}
+                    {currentPage + ADJACENT_PAGES < lastPage - 1 && (
+                        <li>...</li>
+                    )}
+                    {currentPage + ADJACENT_PAGES < lastPage && (
+                        <li>
+                            <a href={`/pagina/${lastPage}`}>{lastPage}</a>
+                        </li>
+                    )}
+                    {page.url.next && (
+                        <li>
+                            <a href={page.url.next} class="pagination-item">
+                                <span>Siguiente</span> &gt;
+                            </a>
+                        </li>
+                    )}
+                </ul>
+            </nav>
+        )
+    }
 </div>
-<slot />
-{
-    page.total >= page.size && (
-        <nav>
-            <ul>
-                {page.url.prev && (
-                    <li>
-                        <a href={page.url.prev}>
-                            &lt; <span>Anterior</span>
-                        </a>
-                    </li>
-                )}
-                {page.url.next && (
-                    <li>
-                        <a href={page.url.next}>
-                            <span>Siguiente</span> &gt;
-                        </a>
-                    </li>
-                )}
-            </ul>
-        </nav>
-    )
-}
+
+<style>
+    .info {
+        @apply px-2 py-1 bg-theme-red-100 rounded-sm;
+    }
+
+    .pagination-item {
+        &[aria-current='true'] {
+            @apply font-bold;
+        }
+    }
+</style>
