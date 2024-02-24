@@ -1,14 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 
-const capitalize = (str: string) =>
-    str
-        .split(' ')
-        .map((word) => {
-            const letters = word.split('');
-            letters[0] = letters[0].toLocaleUpperCase();
-            return letters.join('');
-        })
-        .join(' ');
+import { capitalize } from '@lib/transforms';
 
 const recipesCollection = defineCollection({
     type: 'content',
