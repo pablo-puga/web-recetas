@@ -25,6 +25,10 @@ export const getStaticPaths = (async ({ paginate }) => {
             recipe.data.categories.includes(category),
         );
 
+        filteredRecipes.sort(
+            (a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime(),
+        );
+
         return paginate(filteredRecipes, {
             params: {
                 category: category.toLocaleLowerCase(),
