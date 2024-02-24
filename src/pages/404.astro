@@ -1,5 +1,59 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
+import { FaQuestion } from 'react-icons/fa6';
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+
 const path = Astro.url.pathname;
 ---
 
-<h1>NOT FOUND {path}</h1>
+<BaseLayout title="Las Recetas de Pablo | No encontrado" slug={path}>
+    <ViewTransitions slot="head" />
+    <main
+        class:list={[
+            'max-w-[300px] mx-auto px-2 flex flex-col gap-3 mt-4 leading-relaxed',
+            'sm:max-w-[600px] sm:flex-row sm:px-0 sm:mt-8 md:gap-4 md:mt-10 lg:mt-14 lg:gap-6 lg:max-w-[700px]',
+        ]}
+    >
+        <div class="order-2 sm:order-1">
+            <p
+                class="text-2xl font-medium text-theme-red-600 text-center sm:text-left sm:text-3xl md:text-4xl md:font-semibold lg:text-5xl"
+            >
+                Algo ha ido mal...
+            </p>
+            <p
+                class="mt-2 text-center sm:text-left md:text-lg md:mt-3 lg:text-xl"
+            >
+                No hemos podido encontrar lo que buscas. Puedes probar a
+                utilizar nuestro buscador o volver a la página de inicio para
+                ver las nuevas recetas.
+            </p>
+            <div
+                class="mt-4 flex items-center justify-center gap-2 sm:justify-start md:mt-5 md:gap-3 lg:gap-4"
+            >
+                <button id="search-trigger" class="action">Buscar</button>
+                <a href="/" class="action">Inicio</a>
+            </div>
+        </div>
+        <div class="order-1 flex items-center justify-center sm:order-2">
+            <FaQuestion
+                className="text-8xl text-theme-red-600 sm:text-[160px] md:text-[200px] lg:text-[240px]"
+            />
+        </div>
+    </main>
+</BaseLayout>
+
+<script>
+    document.getElementById('search-trigger')?.addEventListener('click', () => {
+        const search = document.getElementById('search');
+        search?.click();
+    });
+</script>
+
+<style>
+    .action {
+        @apply px-2 py-1 bg-theme-red-600 font-medium text-white rounded-sm min-w-[80px] text-center transition-colors;
+        @apply hover:bg-theme-red-300 hover:text-theme-grey-900;
+        @apply lg:text-lg lg:px-4 lg:py-2 lg:min-w-[100px];
+    }
+</style>
