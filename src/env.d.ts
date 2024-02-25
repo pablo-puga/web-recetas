@@ -6,6 +6,8 @@ interface ImportMetaEnv {
     readonly PUBLIC_RECENT_RESULTS_LIFETIME: number;
     readonly PUBLIC_MAX_RECENT_RESULTS: number;
     readonly PUBLIC_SEARCH_DELAY: number;
+    readonly UMAMI_PATH: string;
+    readonly UMAMI_WEBSITE_ID: string;
 }
 
 interface ImportMeta {

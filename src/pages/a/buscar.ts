@@ -13,6 +13,63 @@ const buildResponse = (status: number, data: object) =>
         },
     });
 
+const postSearchEvent = (request: Request, filter: string) => {
+    const headers: HeadersInit = {
+        'content-type': 'application/json',
+    };
+    if (request.headers.get('x-forwarded-for') !== null) {
+        headers['x-forwarded-for'] = request.headers.get(
+            'x-forwarded-for',
+        ) as string;
+    }
+    if (request.headers.get('host') !== null) {
+        headers['host'] = request.headers.get('host') as string;
+    }
+    if (request.headers.get('accept-language') !== null) {
+        headers['accept-language'] = request.headers.get(
+            'accept-language',
+        ) as string;
+    }
+    if (request.headers.get('referer') !== null) {
+        headers['referer'] = request.headers.get('referer') as string;
+    }
+    if (request.headers.get('user-agent') !== null) {
+        headers['user-agent'] = request.headers.get('user-agent') as string;
+    }
+
+    const url = (() => {
+        const referer = request.headers.get('referer');
+        if (referer === null) return undefined;
+        try {
+            const u = new URL(referer);
+            return u.pathname;
+        } catch (e) {
+            return undefined;
+        }
+    })();
+
+    fetch(`${import.meta.env.APP_URL}/estadisticas/api/send`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+            type: 'event',
+            payload: {
+                name: 'busqueda',
+                website: import.meta.env.UMAMI_WEBSITE_ID,
+                language: request.headers.get('accept-language') ?? undefined,
+                hostname: request.headers.get('host') ?? undefined,
+                referrer: request.headers.get('referer') ?? undefined,
+                url,
+                data: {
+                    filtro: filter,
+                },
+            },
+        }),
+    }).catch((error) => {
+        console.error('Error while posting search event to Umami', error);
+    });
+};
+
 export const GET: APIRoute = async ({ request, url }) => {
     const xApp = request.headers.get('x-app');
     if (!xApp || xApp !== EXPECTED_X_APP) {
@@ -37,6 +94,8 @@ export const GET: APIRoute = async ({ request, url }) => {
 
             return foundCategory !== undefined;
         });
+
+        postSearchEvent(request, filter);
 
         filteredRecipes.sort(
             (a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime(),
