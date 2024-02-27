@@ -43,6 +43,7 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
                     async
                     src={import.meta.env.UMAMI_PATH}
                     data-website-id={import.meta.env.UMAMI_WEBSITE_ID}
+                    data-auto-track="false"
                 />
             )
         }
@@ -64,6 +65,18 @@ const canonicalLink = `${import.meta.env.SITE}${slug}`;
     if ('ontouchstart' in document.documentElement) {
         document.querySelector('body')?.classList.add('touch');
     }
+</script>
+
+<script is:inline>
+    document.addEventListener('astro:page-load', () => {
+        if (window.umami && window.umami?.track) {
+            window.umami.track((props) => ({
+                ...props,
+                url: window.location.pathname,
+                title: document.title,
+            }));
+        }
+    });
 </script>
 
 <style is:global>
