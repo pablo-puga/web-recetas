@@ -39,7 +39,11 @@ const { categories, title, slug } = Astro.props;
                 <slot />
             </div>
             <div class="lg:max-w-[300px]">
-                <CategoryList categories={categories} headerLevel="H2" />
+                <CategoryList
+                    categories={categories}
+                    headerLevel="H2"
+                    pageType="list"
+                />
             </div>
         </div>
     </main>
