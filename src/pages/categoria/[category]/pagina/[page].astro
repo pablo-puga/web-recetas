@@ -45,12 +45,14 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { category } = Astro.params as { category: string };
 const { page, categories } = Astro.props as Props;
+const capitalizedCategory = capitalize(category);
 ---
 
 <ContentWithCategoriesLayout
-    title={`Categoría "${capitalize(category)}" | Página ${page.currentPage}`}
+    title={`Categoría "${capitalizedCategory}" | Página ${page.currentPage}`}
     slug={`/categoria/${category}/pagina/${page.currentPage}`}
     categories={categories}
+    description={`Lista de recetas disponibles dentro de la categoría '${capitalizedCategory}'.`}
 >
     <Pagination page={page}>
         <RecipeList recipes={page.data} />
