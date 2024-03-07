@@ -35,7 +35,7 @@ export const getStaticPaths = (async () => {
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { recipe, categories } = Astro.props;
-const { categories: recipeCategories } = recipe.data;
+const { categories: recipeCategories, cover } = recipe.data;
 const { Content, headings } = await recipe.render();
 ---
 
@@ -45,7 +45,7 @@ const { Content, headings } = await recipe.render();
     description={recipe.data.description}
 >
     <Fragment slot="head">
-        <RecipeStructuredData recipe={recipe} />
+        {cover && <RecipeStructuredData recipe={recipe} />}
         <OGData recipe={recipe} />
         <ViewTransitions />
     </Fragment>

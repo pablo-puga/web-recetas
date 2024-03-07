@@ -9,12 +9,18 @@ interface Props {
     categories: { name: string; count: number }[];
     title: string;
     slug: string;
+    description?: string;
 }
 
-const { categories, title, slug } = Astro.props;
+const { categories, title, slug, description = undefined } = Astro.props;
 ---
 
-<BaseLayout title={title} slug={slug} noTopMargin={true}>
+<BaseLayout
+    title={title}
+    slug={slug}
+    noTopMargin={true}
+    description={description}
+>
     <ViewTransitions slot="head" />
     <main>
         <div class="cover flex items-center justify-center">
