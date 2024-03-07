@@ -19,8 +19,16 @@ import Search from './Search';
     >
         <a href="/">Las Recetas de Pablo</a>
     </span>
-    <Search client:idle className="justify-self-end" />
+    <Search client:idle className="search-box justify-self-end" />
 </header>
+
+<noscript>
+    <style type="text/css" is:inline>
+        .search-box {
+            display: none;
+        }
+    </style>
+</noscript>
 
 <style>
     a {
